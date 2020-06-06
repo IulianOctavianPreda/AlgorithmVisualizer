@@ -1,0 +1,13 @@
+{
+  "appId": "com.AlgorithmVisualizer.app",
+  "appName": "algorithm-visualizer",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}
