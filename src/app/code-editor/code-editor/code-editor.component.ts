@@ -44,9 +44,6 @@ export class CodeEditorComponent implements OnInit {
   }
   run() {
     const formGroup = this.formGroup.value;
-    console.log(formGroup);
-    console.log(window.monaco);
-    console.log(monaco);
     this.language.run(formGroup.code, formGroup.language);
   }
 }
