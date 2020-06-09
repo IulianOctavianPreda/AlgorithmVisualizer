@@ -1,4 +1,11 @@
-import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
@@ -36,9 +43,11 @@ export class CodeEditorBaseComponent
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes?.language?.currentValue !== this.language) {
       this.editorOptions.language = changes.language.currentValue;
+      // monaco.editor.setModelLanguage(changes.language.currentValue);
     }
     if (changes?.theme?.currentValue !== this.theme) {
       this.editorOptions.theme = changes.theme.currentValue;
+      // monaco.editor.setTheme(changes.theme.currentValue);
     }
   }
 

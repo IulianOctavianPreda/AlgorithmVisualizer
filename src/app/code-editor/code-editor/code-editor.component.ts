@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Language } from "../enums/language";
 import { FormatterService } from "../services/formatter/formatter.service";
 import { LanguageService } from "../services/language-service/language.service";
+import { Languages } from "./../models/code-editor-languages";
+import { Themes } from "./../models/code-editor-themes";
 import { StateManagementService } from "./../state-management/state-management.service";
 
 @Component({
@@ -12,8 +14,11 @@ import { StateManagementService } from "./../state-management/state-management.s
   styleUrls: ["./code-editor.component.scss"],
 })
 export class CodeEditorComponent implements OnInit {
-  formGroup: FormGroup;
-  error: string = null;
+  public formGroup: FormGroup;
+  public error: string = null;
+  public themes = Themes;
+  public languages = Languages;
+
   constructor(
     private formBuilder: FormBuilder,
     private language: LanguageService,
@@ -34,6 +39,12 @@ export class CodeEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  get theme() {
+    console.log(this.formGroup.value.theme);
+    return this.formGroup.value.theme;
+  }
+
   format() {
     const code = this.formGroup.get("code");
     const formattedCode = this.formatter.format(
@@ -42,6 +53,7 @@ export class CodeEditorComponent implements OnInit {
     );
     code.setValue(formattedCode);
   }
+
   run() {
     const formGroup = this.formGroup.value;
     this.language.run(formGroup.code, formGroup.language);

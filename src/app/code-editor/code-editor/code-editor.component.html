@@ -8,9 +8,12 @@
         <ng-select
           [searchable]="false"
           [clearable]="false"
+          [selectOnTab]="true"
           labelForId="algorithm"
           formControlName="algorithm"
           [items]=""
+          placeholder="Algorithm"
+          bindLabel="name"
         ></ng-select>
       </div>
       <div class="col-3 px-4">
@@ -18,9 +21,13 @@
         <ng-select
           [searchable]="false"
           [clearable]="false"
+          [selectOnTab]="true"
           labelForId="language"
           formControlName="language"
-          [items]=""
+          [items]="languages"
+          placeholder="Language"
+          bindLabel="name"
+          bindValue="code"
         ></ng-select>
       </div>
       <div class="col-3 px-4">
@@ -28,9 +35,13 @@
         <ng-select
           [searchable]="false"
           [clearable]="false"
+          [selectOnTab]="true"
           labelForId="theme"
           formControlName="theme"
-          [items]=""
+          [items]="themes"
+          placeholder="Theme"
+          bindLabel="name"
+          bindValue="code"
         ></ng-select>
       </div>
       <div class="col-3 px-4 d-flex justify-content-end">
@@ -44,6 +55,7 @@
       <app-code-editor-base
         class="w-100 h-100 p-4"
         formControlName="code"
+        [theme]="theme"
       ></app-code-editor-base>
     </div>
   </form>
