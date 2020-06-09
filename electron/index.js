@@ -38,22 +38,16 @@ async function createWindow() {
     width: 1600,
     show: false,
     webPreferences: {
-      nodeIntegration: true,
-      preload: path.join(
-        __dirname,
-        "node_modules",
-        "@capacitor",
-        "electron",
-        "dist",
-        "electron-bridge.js"
-      ),
+      nodeIntegration: false,
+      nodeIntegrationInWorker: false,
+      preload: path.join(__dirname, "preload.js"),
     },
   });
 
   configCapacitor(mainWindow);
 
   if (isDevMode) {
-    // Set our above template to the Menu Object if we are in development mode, dont want users having the devtools.
+    // Set our above template to the Menu Object if we are in development mode, don't want users having the devtools.
     Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplateDev));
     // If we are developers we might as well open the devtools by default.
     mainWindow.webContents.openDevTools();
