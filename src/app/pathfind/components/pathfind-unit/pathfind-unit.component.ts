@@ -1,40 +1,56 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+
+import { Unit } from "./../../types/unit";
 
 @Component({
   selector: "app-pathfind-unit",
   templateUrl: "./pathfind-unit.component.html",
   styleUrls: ["./pathfind-unit.component.scss"],
   animations: [
-    trigger("openClose", [
-      // ...
+    trigger("animationTrigger", [
       state(
-        "open",
+        "true",
         style({
-          height: "200px",
-          opacity: 1,
           backgroundColor: "yellow",
         })
       ),
       state(
-        "closed",
+        "false",
         style({
-          height: "100px",
-          opacity: 0.5,
+          backgroundColor: "transparent",
+        })
+      ),
+      state(
+        "isSolution",
+        style({
           backgroundColor: "green",
         })
       ),
-      transition("open => closed", [animate("1s")]),
-      transition("closed => open", [animate("0.5s")]),
+      transition("true => false", [animate("1s")]),
+      transition("false => true", [animate("1s")]),
+      transition("true => isSolution", [animate("1s")]),
+      transition("false => isSolution", [animate("1s")]),
     ]),
   ],
 })
 export class PathfindUnitComponent implements OnInit {
-  isOpen = true;
+  @Input() unit: Unit;
+
+  @Output() unitUpdate = new EventEmitter<boolean>();
 
   toggle() {
-    this.isOpen = !this.isOpen;
+    this.unitUpdate.emit(!this.unit.isSelected);
   }
+
+  animationTrigger() {
+    if (!!this.unit.isSolution) {
+      return "isSolution";
+    } else {
+      return this.unit.isSelected ? "true" : "false";
+    }
+  }
+
   constructor() {}
 
   ngOnInit(): void {}

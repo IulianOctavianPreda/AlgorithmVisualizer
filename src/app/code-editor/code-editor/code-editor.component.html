@@ -1,10 +1,48 @@
-<div>
-  <form>
-    <input />
-    <input />
-    <input />
-    <div style="height: 1000px;">
-      <app-code-editor-base #codeEditorBase></app-code-editor-base>
+<div class="w-100 h-100">
+  <form [formGroup]="formGroup" class="w-100 h-100 d-flex flex-column">
+    <div *ngIf="!!error" class="row m-0 alert alert-danger">{{ error }}</div>
+
+    <div class="row m-0 d-flex justify-content-between align-items-end">
+      <div class="col-3 px-4">
+        <label for="algorithm">Algorithm</label>
+        <ng-select
+          [searchable]="false"
+          [clearable]="false"
+          labelForId="algorithm"
+          formControlName="algorithm"
+          [items]=""
+        ></ng-select>
+      </div>
+      <div class="col-3 px-4">
+        <label for="language">Language</label>
+        <ng-select
+          [searchable]="false"
+          [clearable]="false"
+          labelForId="language"
+          formControlName="language"
+          [items]=""
+        ></ng-select>
+      </div>
+      <div class="col-3 px-4">
+        <label for="theme">Theme</label>
+        <ng-select
+          [searchable]="false"
+          [clearable]="false"
+          labelForId="theme"
+          formControlName="theme"
+          [items]=""
+        ></ng-select>
+      </div>
+      <div class="col-3 px-4 d-flex justify-content-end">
+        <button class="btn btn-primary" (click)="format()">Format code</button>
+        <button class="btn btn-primary" (click)="run()">Run</button>
+      </div>
+    </div>
+    <div class="row m-0 h-100 justify-content-center align-items-center">
+      <app-code-editor-base
+        class="w-100 h-100 p-4"
+        formControlName="code"
+      ></app-code-editor-base>
     </div>
   </form>
 </div>

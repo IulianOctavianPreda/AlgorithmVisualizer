@@ -1,7 +1,9 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
-import { CodeEditorBaseComponent } from "../components/code-editor-base/code-editor-base.component";
+import { FormatterService } from "../services/formatter/formatter.service";
+import { LanguageService } from "../services/language-service/language.service";
+import { StateManagementService } from "./../state-management/state-management.service";
 
 @Component({
   selector: "app-code-editor",
@@ -9,16 +11,38 @@ import { CodeEditorBaseComponent } from "../components/code-editor-base/code-edi
   styleUrls: ["./code-editor.component.scss"],
 })
 export class CodeEditorComponent implements OnInit {
-  @ViewChild("codeEditorBase") codeEditorBase: CodeEditorBaseComponent;
-
   formGroup: FormGroup;
-  constructor(private formBuilder: FormBuilder) {
-    this.formGroup = this.formBuilder.group({});
+  error: string = null;
+  constructor(
+    private formBuilder: FormBuilder,
+    private language: LanguageService,
+    private formatter: FormatterService,
+    private stateManager: StateManagementService
+  ) {
+    this.formGroup = this.formBuilder.group({
+      language: null,
+      theme: null,
+      algorithm: null,
+      code: null,
+    });
+
+    this.stateManager.code$.subscribe(
+      (value) => console.log(value),
+      (error) => (this.error = error.message)
+    );
   }
 
   ngOnInit(): void {}
-
+  format() {
+    const code = this.formGroup.get("code");
+    const formattedCode = this.formatter.format(code.value, "");
+    code.setValue(formattedCode);
+  }
   run() {
-    // this.codeEditor.code
+    const formGroup = this.formGroup.value;
+    console.log(formGroup);
+    console.log(window.monaco);
+    console.log(monaco);
+    this.language.run(formGroup.code, formGroup.language);
   }
 }
