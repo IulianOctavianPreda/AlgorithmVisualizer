@@ -8,7 +8,7 @@ import * as prettier from "prettier/standalone";
 export class TypescriptFormatterService {
   constructor() {}
 
-  format(code: string) {
+  format(code: string): string {
     return prettier.format(code, {
       semi: true,
       parser: "typescript",

@@ -34,7 +34,7 @@ export class JavascriptInterpreterService implements OnDestroy {
     this.worker.terminate();
   }
 
-  public interpret(code: string) {
+  public interpret(code: string): void {
     if (this.isWorkerAvailable) {
       this.worker.postMessage(code);
     } else {

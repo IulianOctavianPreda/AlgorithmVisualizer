@@ -1,14 +1,16 @@
+import { Language } from "../enums/language";
+
 export const Languages = [
   {
     code: "python",
-    name: "Python",
+    name: Language.Python,
   },
   {
     code: "javascript",
-    name: "Javascript",
+    name: Language.Javascript,
   },
   {
     code: "typescript",
-    name: "Typescript",
+    name: Language.Typescript,
   },
 ];

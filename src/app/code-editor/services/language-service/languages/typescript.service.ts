@@ -16,11 +16,11 @@ export class TypescriptService {
 
   constructor(private javascriptService: JavascriptService) {}
 
-  public transpile(code: string) {
+  public transpile(code: string): string {
     return ts.transpile(code, this.config);
   }
 
-  public run(code: string) {
+  public run(code: string): void {
     this.javascriptService.run(this.transpile(code));
   }
 }

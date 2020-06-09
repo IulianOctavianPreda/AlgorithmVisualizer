@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 
+import { Language } from "../enums/language";
 import { FormatterService } from "../services/formatter/formatter.service";
 import { LanguageService } from "../services/language-service/language.service";
 import { StateManagementService } from "./../state-management/state-management.service";
@@ -35,7 +36,10 @@ export class CodeEditorComponent implements OnInit {
   ngOnInit(): void {}
   format() {
     const code = this.formGroup.get("code");
-    const formattedCode = this.formatter.format(code.value, "");
+    const formattedCode = this.formatter.format(
+      code.value,
+      Language.Typescript
+    );
     code.setValue(formattedCode);
   }
   run() {

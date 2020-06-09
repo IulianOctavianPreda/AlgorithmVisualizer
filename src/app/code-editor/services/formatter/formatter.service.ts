@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 
+import { Language } from "../../enums/language";
 import { TypescriptFormatterService } from "./formatters/typescript-formatter.service";
 
 @Injectable({
@@ -8,7 +9,10 @@ import { TypescriptFormatterService } from "./formatters/typescript-formatter.se
 export class FormatterService {
   constructor(private ts: TypescriptFormatterService) {}
 
-  public format(code: string, language: string) {
-    return this.ts.format(code);
+  public format(code: string, language: Language): string {
+    if (language === Language.Javascript || Language.Typescript) {
+      return this.ts.format(code);
+    }
+    return ""; // placeholder for now
   }
 }
