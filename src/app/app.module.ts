@@ -5,6 +5,7 @@ import { MonacoEditorModule } from "ngx-monaco-editor";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import { CodeEditorModule } from "./code-editor/code-editor.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,6 +14,7 @@ import { AppComponent } from "./app.component";
     BrowserAnimationsModule,
     AppRoutingModule,
     MonacoEditorModule.forRoot(),
+    CodeEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
