@@ -6,6 +6,9 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "report": "webpack-bundle-analyzer dist/stats.json",
+    "bundle-report": "ng build --stats-json && webpack-bundle-analyzer dist/stats.json",
+    "bundle-report-prod": "ng build --prod --stats-json && webpack-bundle-analyzer dist/stats.json",
     "init:capacitor": "npx cap init",
     "add:android": "npx cap add android",
     "add:electron": "npx cap add electron",
@@ -70,6 +73,7 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.7.5",
+    "webpack-bundle-analyzer": "^3.8.0"
   }
 }
