@@ -11,3 +11,15 @@ body {
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
   white-space: normal !important;
 }
+
+.flex-container {
+  @extend .container-fluid;
+  @extend .d-flex;
+  height: 100%;
+}
+
+.flex-container-centered {
+  @extend .flex-container;
+  @extend .justify-content-center;
+  @extend .align-items-center;
+}
