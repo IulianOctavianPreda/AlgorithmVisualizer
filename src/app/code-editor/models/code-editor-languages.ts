@@ -1,10 +1,10 @@
 import { Language } from "../enums/language";
 
 export const Languages = [
-  {
-    code: "python",
-    name: Language.Python,
-  },
+  // {
+  //   code: "python",
+  //   name: Language.Python,
+  // },
   {
     code: "javascript",
     name: Language.Javascript,

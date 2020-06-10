@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex-row m-0 justify-content-between align-items-end">
-      <div class="col-md-3 col-sm-4 px-4">
+      <div class="col px-4">
         <label for="algorithm">Algorithm</label>
         <ng-select
           [searchable]="false"
@@ -18,7 +18,7 @@
           bindLabel="name"
         ></ng-select>
       </div>
-      <div class="col-md-3 col-sm-4 px-4">
+      <div class="col px-4">
         <label for="language">Language</label>
         <ng-select
           [searchable]="false"
@@ -32,7 +32,7 @@
           bindValue="code"
         ></ng-select>
       </div>
-      <div class="col-md-3 col-sm-4 px-4">
+      <!-- <div class="col px-4">
         <label for="theme">Theme</label>
         <ng-select
           [searchable]="false"
@@ -45,9 +45,9 @@
           bindLabel="name"
           bindValue="code"
         ></ng-select>
-      </div>
+      </div> -->
       <div
-        class="col-md-3 col-sm-12 px-4 my-md-0 my-sm-2 d-flex justify-content-end"
+        class="col-md-4 col-sm-12 px-4 my-md-0 my-sm-2 d-flex justify-content-end"
       >
         <button class="btn btn-primary mr-1" (click)="format()">
           Format code
@@ -56,10 +56,9 @@
       </div>
     </div>
     <div class="flex-row h-100 m-0 flex-centered">
-      <div class="h-100 col-12" style="background-color: black;"></div>
-        class="w-100 h-100 p-4"
+      <app-code-editor-base
         formControlName="code"
-        [theme]="theme"
+        class="h-100 col-12"
       ></app-code-editor-base>
     </div>
   </form>

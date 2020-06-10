@@ -5,7 +5,6 @@ import { Language } from "../enums/language";
 import { FormatterService } from "../services/formatter/formatter.service";
 import { LanguageService } from "../services/language-service/language.service";
 import { Languages } from "./../models/code-editor-languages";
-import { Themes } from "./../models/code-editor-themes";
 import { StateManagementService } from "./../state-management/state-management.service";
 
 @Component({
@@ -16,46 +15,52 @@ import { StateManagementService } from "./../state-management/state-management.s
 export class CodeEditorComponent implements OnInit {
   public formGroup: FormGroup;
   public error: string = null;
-  public themes = Themes;
+  // public themes = Themes;
   public languages = Languages;
 
   constructor(
     private formBuilder: FormBuilder,
-    private language: LanguageService,
-    private formatter: FormatterService,
+    private languageService: LanguageService,
+    private formatterService: FormatterService,
     private stateManager: StateManagementService
   ) {
     this.formGroup = this.formBuilder.group({
-      language: null,
+      language: Languages.find((x) => Language.Typescript === x.name).code,
       theme: null,
       algorithm: null,
-      code: null,
+      code: "",
     });
 
     this.stateManager.code$.subscribe(
-      (value) => console.log(value),
-      (error) => (this.error = error.message)
+      (data: { value?: any; error?: Error }) => {
+        if (data?.value) {
+          // code logic
+        }
+        if (data?.error) {
+          this.error = data.error.message;
+        }
+      }
     );
   }
 
   ngOnInit(): void {}
 
-  get theme() {
-    console.log(this.formGroup.value.theme);
-    return this.formGroup.value.theme;
+  get language() {
+    return this.formGroup.value.language;
   }
 
   format() {
     const code = this.formGroup.get("code");
-    const formattedCode = this.formatter.format(
+    const language = this.formGroup.get("language");
+    const formattedCode = this.formatterService.format(
       code.value,
-      Language.Typescript
+      language.value
     );
     code.setValue(formattedCode);
   }
 
   run() {
     const formGroup = this.formGroup.value;
-    this.language.run(formGroup.code, formGroup.language);
+    this.languageService.run(formGroup.code, formGroup.language);
   }
 }

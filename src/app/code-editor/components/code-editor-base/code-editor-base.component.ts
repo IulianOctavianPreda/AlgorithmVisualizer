@@ -1,12 +1,18 @@
 import {
+  AfterViewInit,
   Component,
+  ElementRef,
   forwardRef,
   Input,
-  OnChanges,
   OnInit,
-  SimpleChanges,
+  ViewChild,
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
+import { CodeJar } from "codejar";
+import hljs from "highlight.js/lib/core";
+import javascript from "highlight.js/lib/languages/javascript";
+import python from "highlight.js/lib/languages/python";
+import typescript from "highlight.js/lib/languages/typescript";
 
 @Component({
   selector: "app-code-editor-base",
@@ -20,44 +26,53 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
     },
   ],
 })
-export class CodeEditorBaseComponent
-  implements OnInit, OnChanges, ControlValueAccessor {
-  @Input() language: string;
-  @Input() theme: string;
+export class CodeEditorBaseComponent implements OnInit, AfterViewInit {
+  @ViewChild("editor") editor: ElementRef;
 
+  @Input() language: string;
+
+  public codeEditor: CodeJar = null;
   private _code: string;
-  public editorOptions = {
-    theme: "vs-dark",
-    language: "javascript",
-    formatOnType: true,
-    minimap: { enabled: false },
-  };
 
   constructor() {}
 
   public ngOnInit(): void {
-    this.editorOptions.language = this.language ?? this.editorOptions.language;
-    this.editorOptions.theme = this.theme ?? this.editorOptions.theme;
+    this.registerLanguages();
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes?.language?.currentValue !== this.language) {
-      this.editorOptions.language = changes.language.currentValue;
-      // monaco.editor.setModelLanguage(changes.language.currentValue);
-    }
-    if (changes?.theme?.currentValue !== this.theme) {
-      this.editorOptions.theme = changes.theme.currentValue;
-      // monaco.editor.setTheme(changes.theme.currentValue);
-    }
+  public ngAfterViewInit(): void {
+    this.codeEditor = CodeJar(this.editor.nativeElement, this.highlight, {
+      tab: " ".repeat(4),
+    });
+
+    this.codeEditor.onUpdate((code) => {
+      this._code = code;
+      this.onChange(code);
+    });
+  }
+
+  private highlight(editor: HTMLElement) {
+    editor.textContent = editor.textContent;
+    hljs.highlightBlock(editor);
+  }
+
+  private registerLanguages() {
+    hljs.registerLanguage("javascript", javascript);
+    hljs.registerLanguage("typescript", typescript);
+    hljs.registerLanguage("python", python);
   }
 
   public get code(): string {
     return this._code;
   }
+
   public set code(v: string) {
     if (v !== this._code) {
       this._code = v;
       this.onChange(v);
+      if (!!this.codeEditor) {
+        this.codeEditor.updateCode(v);
+      }
     }
   }
 

@@ -8,7 +8,6 @@ import { StateManagementService } from "../../../state-management/state-manageme
 export class JavascriptInterpreterService implements OnDestroy {
   private worker: Worker;
   private isWorkerAvailable = false;
-  // private destroy$ = new Subject<boolean>();
 
   constructor(private stateManagement: StateManagementService) {
     if (typeof Worker !== "undefined") {
@@ -22,15 +21,9 @@ export class JavascriptInterpreterService implements OnDestroy {
     this.worker.onmessage = ({ data }) => {
       this.stateManagement.code$.next(data);
     };
-    this.worker.onerror = (error) => {
-      console.log(error);
-      this.stateManagement.code$.error(error);
-    };
   }
 
   public ngOnDestroy(): void {
-    // this.destroy$.next(true);
-    // this.destroy$.unsubscribe();
     this.worker.terminate();
   }
 
@@ -40,9 +33,10 @@ export class JavascriptInterpreterService implements OnDestroy {
     } else {
       try {
         const responseFn = new Function(`${code} return main()`);
-        this.stateManagement.code$.next(responseFn());
+        const data = responseFn();
+        this.stateManagement.code$.next({ value: data });
       } catch (error) {
-        this.stateManagement.code$.error(error);
+        this.stateManagement.code$.next({ error });
       }
     }
   }

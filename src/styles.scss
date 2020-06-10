@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap";
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "highlight.js/styles/darcula.css";
 
 html,
 body {
@@ -31,6 +32,6 @@ body {
 
 .flex-row {
   @extend .row;
-  @extend .my-1;
+  @extend .mb-1;
   width: 100%;
 }

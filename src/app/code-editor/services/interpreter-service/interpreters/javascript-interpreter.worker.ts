@@ -1,7 +1,12 @@
 /// <reference lib="webworker" />
 
 addEventListener("message", ({ data }) => {
-  const fn = new Function(`${data} return main()`);
-  const response: any = fn();
+  let response = null;
+  try {
+    const fn = new Function(`${data} return main()`);
+    response = { value: fn() };
+  } catch (error) {
+    response = { error };
+  }
   postMessage(response);
 });
