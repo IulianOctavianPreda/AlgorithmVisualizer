@@ -15,11 +15,22 @@ body {
 .flex-container {
   @extend .container-fluid;
   @extend .d-flex;
+  @extend .px-0;
   height: 100%;
+}
+
+.flex-centered {
+  @extend .justify-content-center;
+  @extend .align-items-center;
 }
 
 .flex-container-centered {
   @extend .flex-container;
-  @extend .justify-content-center;
-  @extend .align-items-center;
+  @extend .flex-centered;
+}
+
+.flex-row {
+  @extend .row;
+  @extend .my-1;
+  width: 100%;
 }

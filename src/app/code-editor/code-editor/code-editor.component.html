@@ -1,9 +1,11 @@
 <div class="flex-container-centered">
-  <form [formGroup]="formGroup" class="flex-container-centered flex-column">
-    <div *ngIf="!!error" class="row m-0 alert alert-danger">{{ error }}</div>
+  <form [formGroup]="formGroup" class="flex-container flex-column">
+    <div *ngIf="!!error" class="flex-row m-0 alert alert-danger">
+      {{ error }}
+    </div>
 
-    <div class="row m-0 d-flex justify-content-between align-items-end">
-      <div class="col-3 col-xs-4 px-4">
+    <div class="flex-row m-0 justify-content-between align-items-end">
+      <div class="col-md-3 col-sm-4 px-4">
         <label for="algorithm">Algorithm</label>
         <ng-select
           [searchable]="false"
@@ -16,7 +18,7 @@
           bindLabel="name"
         ></ng-select>
       </div>
-      <div class="col-3 col-xs-4 px-4">
+      <div class="col-md-3 col-sm-4 px-4">
         <label for="language">Language</label>
         <ng-select
           [searchable]="false"
@@ -30,7 +32,7 @@
           bindValue="code"
         ></ng-select>
       </div>
-      <div class="col-3 col-xs-4 px-4">
+      <div class="col-md-3 col-sm-4 px-4">
         <label for="theme">Theme</label>
         <ng-select
           [searchable]="false"
@@ -44,15 +46,17 @@
           bindValue="code"
         ></ng-select>
       </div>
-      <div class="col-3 col-xs-12 px-4 d-flex justify-content-end">
+      <div
+        class="col-md-3 col-sm-12 px-4 my-md-0 my-sm-2 d-flex justify-content-end"
+      >
         <button class="btn btn-primary mr-1" (click)="format()">
           Format code
         </button>
         <button class="btn btn-success" (click)="run()">Run</button>
       </div>
     </div>
-    <div class="row m-0 h-100 justify-content-center align-items-center">
-      <app-code-editor-base
+    <div class="flex-row h-100 m-0 flex-centered">
+      <div class="h-100 col-12" style="background-color: black;"></div>
         class="w-100 h-100 p-4"
         formControlName="code"
         [theme]="theme"
