@@ -1,0 +1,21 @@
+<div class="flex-container side-menu">
+  <div [@openClose]="isOpen ? 'open' : 'close'" class="col editor px-0">
+    <app-code-editor *ngIf="isOpen"></app-code-editor>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="arrow-container">
+      <fa-icon
+        *ngIf="isOpen"
+        [icon]="leftArrow"
+        class="text-white"
+        (click)="toggle()"
+      ></fa-icon>
+      <fa-icon
+        *ngIf="!isOpen"
+        [icon]="rightArrow"
+        class="text-white"
+        (click)="toggle()"
+      ></fa-icon>
+    </div>
+  </div>
+</div>
