@@ -1,6 +1,11 @@
 <div
-  (click)="toggle()"
-  (mousedown)="toggle()"
   [@animationTrigger]="animationTrigger()"
-  class="open-close-container"
-></div>
+  [ngStyle]="{
+    height: unitSize + 'px',
+    width: unitSize + 'px',
+    border: '1px solid black'
+  }"
+  class="noselect"
+>
+  <ng-content> </ng-content>
+</div>

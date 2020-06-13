@@ -1,15 +1,6 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, OnInit } from "@angular/core";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: "app-code-editor-side-menu",
@@ -24,6 +15,7 @@ import {
           "flex-grow": "0",
           "padding-left": "0px",
           "padding-right": "0px",
+          width: "0px",
         })
       ),
       transition("open => close", [animate("0.3s ease-in-out")]),

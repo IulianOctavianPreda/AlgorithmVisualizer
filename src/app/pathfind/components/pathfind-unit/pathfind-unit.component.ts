@@ -1,7 +1,8 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 
-import { Unit } from "./../../types/unit";
+import { PathfindUnit } from "./../../types/unit";
+import { PATHFIND_UNIT_SIZE } from "./../constants/constants";
 
 @Component({
   selector: "app-pathfind-unit",
@@ -34,24 +35,29 @@ import { Unit } from "./../../types/unit";
     ]),
   ],
 })
-export class PathfindUnitComponent implements OnInit {
-  @Input() unit: Unit;
+export class PathfindUnitComponent implements OnInit, OnChanges {
+  @Input() unit: PathfindUnit;
 
-  @Output() unitUpdate = new EventEmitter<boolean>();
+  @Output() unitUpdate = new EventEmitter<PathfindUnit>();
 
-  toggle() {
-    this.unitUpdate.emit(!this.unit.isSelected);
-  }
+  unitSize = PATHFIND_UNIT_SIZE;
 
   animationTrigger() {
-    if (!!this.unit.isSolution) {
-      return "isSolution";
-    } else {
-      return this.unit.isSelected ? "true" : "false";
+    if (!this.unit?.isFinishPoint && !this.unit?.isStartingPoint) {
+      if (this.unit?.isSolution) {
+        return "isSolution";
+      } else {
+        return this.unit.isSelected ? "true" : "false";
+      }
     }
   }
 
   constructor() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.unit.currentValue) {
+      this.animationTrigger();
+    }
+  }
 
   ngOnInit(): void {}
 }

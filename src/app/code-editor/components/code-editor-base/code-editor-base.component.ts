@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  forwardRef,
-  Input,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { CodeJar } from "codejar";
 import hljs from "highlight.js/lib/core";

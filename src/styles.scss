@@ -16,33 +16,60 @@ body {
   white-space: normal !important;
 }
 
-.flex-container {
+.container-flex {
   @extend .container-fluid;
   @extend .d-flex;
   @extend .px-0;
+}
+
+.container-flex-full {
+  @extend .container-flex;
   height: 100%;
 }
 
-.flex-centered {
+.centered-flex {
   @extend .justify-content-center;
   @extend .align-items-center;
 }
 
-.flex-container-centered {
-  @extend .flex-container;
-  @extend .flex-centered;
+.container-centered-flex {
+  @extend .container-flex-full;
+  @extend .centered-flex;
 }
 
-.flex-row {
+.row-flex {
   @extend .row;
   @extend .px-0;
   @extend .mb-1;
   width: 100%;
 }
 
-.flex-row-mb-0 {
+.row-flex-mb-0 {
   @extend .row;
   @extend .px-0;
   @extend .mb-0;
   width: 100%;
+}
+
+.flex-direction-row {
+  @extend .flex-row;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+@for $size from 0 to 21 {
+  .h-#{$size * 5} {
+    height: percentage($size * 5 / 100);
+  }
+  .w-#{$size * 5} {
+    width: percentage($size * 5 / 100);
+  }
 }
