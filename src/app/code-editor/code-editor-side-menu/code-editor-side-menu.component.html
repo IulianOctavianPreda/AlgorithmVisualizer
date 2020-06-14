@@ -1,19 +1,27 @@
-<div class="container-flex-full side-menu">
-  <div [@openClose]="isOpen ? 'open' : 'close'" class="col editor px-0">
-    <app-code-editor *ngIf="isOpen"></app-code-editor>
+<div
+  class="container-flex-full side-menu"
+  [@openClose]="isOpen ? 'open' : 'close'"
+>
+  <div class="col editor px-0" [@visibleHidden]="isOpen ? 'visible' : 'hidden'">
+    <app-code-editor></app-code-editor>
   </div>
-  <div class="d-flex align-items-center">
+  <div
+    class="d-flex align-items-center"
+    [ngClass]="{ 'hide-arrow-mobile': isOpen }"
+  >
     <div class="arrow-container">
       <fa-icon
         *ngIf="isOpen"
         [icon]="leftArrow"
         class="text-white"
+        [size]="'2x'"
         (click)="toggle()"
       ></fa-icon>
       <fa-icon
         *ngIf="!isOpen"
         [icon]="rightArrow"
         class="text-white"
+        [size]="'2x'"
         (click)="toggle()"
       ></fa-icon>
     </div>

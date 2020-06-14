@@ -5,10 +5,10 @@ export const Languages = [
   //   code: "python",
   //   name: Language.Python,
   // },
-  {
-    code: "javascript",
-    name: Language.Javascript,
-  },
+  // {
+  //   code: "javascript",
+  //   name: Language.Javascript,
+  // },
   {
     code: "typescript",
     name: Language.Typescript,

@@ -21,6 +21,17 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
       transition("open => close", [animate("0.3s ease-in-out")]),
       transition("close => open", [animate("0.3s ease-in-out")]),
     ]),
+    trigger("visibleHidden", [
+      state("visible", style({})),
+      state(
+        "hidden",
+        style({
+          transform: "translateY(-100%)",
+        })
+      ),
+      transition("visible => hidden", [animate("0.3s")]),
+      transition("hidden => visible", [animate("0.3s")]),
+    ]),
   ],
 })
 export class CodeEditorSideMenuComponent implements OnInit {

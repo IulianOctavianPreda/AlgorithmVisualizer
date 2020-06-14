@@ -21,3 +21,9 @@
     max-width: 100%;
   }
 }
+
+.hide-arrow-mobile {
+  @media screen and (max-width: 720px) {
+    display: none !important;
+  }
+}
