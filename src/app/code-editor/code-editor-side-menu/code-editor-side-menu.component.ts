@@ -44,6 +44,12 @@ export class CodeEditorSideMenuComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  onPanRight() {
+    this.isOpen = true;
+  }
+  onPanLeft() {
+    this.isOpen = false;
+  }
   toggle() {
     this.isOpen = !this.isOpen;
   }
