@@ -19,6 +19,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   flagIcon = faFlag;
   actorIcon = faMale;
   mouseDown = false;
+  selectedNode: PathfindNode;
 
   constructor(private changeDetection: ChangeDetectorRef) {}
 
@@ -35,14 +36,14 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     // this.copyUsableValuesFromOldGrid(oldGrid);
   }
 
-  resetGrid() {
+  resetGrid(): void {
     this.gridHeight = this.gridRef?.nativeElement?.offsetHeight ?? 0;
     this.gridWidth = this.gridRef?.nativeElement?.offsetWidth ?? 0;
     this.grid = this.createGrid();
     this.changeDetection.detectChanges();
   }
 
-  createGrid() {
+  createGrid(): Array<Array<PathfindNode>> {
     const rows = Math.floor(this.gridHeight / PATHFIND_NODE_SIZE);
     const cols = Math.floor(this.gridWidth / PATHFIND_NODE_SIZE);
 
@@ -57,7 +58,12 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     return grid;
   }
 
-  createPathfindNode(row: number, col: number, rows: number, cols: number) {
+  createPathfindNode(
+    row: number,
+    col: number,
+    rows: number,
+    cols: number
+  ): PathfindNode {
     if (cols > rows) {
       const initialRowPosition = Math.floor(rows / 2);
       const initialColStartingPosition = 2;
@@ -87,16 +93,27 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // copyUsableValuesFromOldGrid(oldGrid: Array<Array<PathfindNode>>) {
+  // copyUsableValuesFromOldGrid(oldGrid: Array<Array<PathfindNode>>): void {
+  //   let hasStartingPoint = false;
+  //   let hasFinishPoint = false;
   //   for (let row = 0; row < this.grid.length; row++) {
   //     for (let col = 0; col < this.grid[row].length; col++) {
   //       if (!!oldGrid[row][col]) {
+  //         if(oldGrid[row][col].isFinishPoint){
+  //           hasFinishPoint = true
+  //         }
+  //         if(oldGrid[row][col].isStartingPoint){
+  //           hasStartingPoint = true
+  //         }
   //         this.copyPathfindNodeProperties(
   //           oldGrid[row][col],
   //           this.grid[row][col]
   //         );
   //       }
   //     }
+  //   }
+  //   if(!hasFinishPoint){
+
   //   }
   // }
 
@@ -107,68 +124,46 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     destination.isStartingPoint = source.isSelected;
   }
 
-  selectedNode: PathfindNode;
-
-  onDrag(event: DragEvent, node: PathfindNode) {
+  onDrag(node: PathfindNode) {
     this.mouseDown = false;
     this.selectedNode = node;
-
-    // event.dataTransfer.setData("draggedNode", JSON.stringify(node));
   }
 
   onDrop(event: DragEvent, node: PathfindNode) {
     event.preventDefault();
-    // const data = JSON.parse(event.dataTransfer.getData("draggedNode"));
     this.copyPathfindNodeProperties(this.selectedNode, node);
+    this.selectedNode = null;
   }
 
-  allowDrag(event) {
+  allowDrag(event: DragEvent) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  onMouseDown(data: PathfindNode) {
+  onMouseDown(node: PathfindNode) {
     this.mouseDown = true;
-    this.nodeUpdate(data);
+    this.nodeUpdate(node);
   }
 
-  onMouseUp(data: PathfindNode) {
+  onMouseUp() {
     this.mouseDown = false;
   }
 
-  onMouseOver(data: PathfindNode) {
+  onMouseOver(node: PathfindNode) {
     if (this.mouseDown) {
-      this.nodeUpdate(data);
+      this.nodeUpdate(node);
     }
   }
 
-  onTap(data: PathfindNode) {
-    console.log("tap");
-    this.nodeUpdate(data);
+  onTap(node: PathfindNode) {
+    this.nodeUpdate(node);
   }
 
-  onPan(data: PathfindNode) {
-    this.nodeUpdate(data);
-  }
-
-  // isPressed = false;
-  // onPress(data: PathfindNode) {
-  //   this.isPressed = true;
-  //   this.selectedNode = data;
-  // }
-
-  // onPressUp(data: PathfindNode) {
-  //   if (this.isPressed) {
-  //     this.isPressed = false;
-  //     this.copyPathfindNodeProperties(this.selectedNode, data);
-  //   }
-  // }
-
-  nodeUpdate(data) {
+  nodeUpdate(node: PathfindNode) {
     this.grid.forEach((arr) => {
-      let node = arr.find((x) => x.id === data.id);
-      if (!!node) {
-        node.isSelected = !node.isSelected;
+      const foundNode = arr.find((x) => x.id === node.id);
+      if (!!foundNode) {
+        foundNode.isSelected = !foundNode.isSelected;
       }
     });
   }
