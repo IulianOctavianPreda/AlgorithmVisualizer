@@ -4,14 +4,14 @@ import { NgModule } from "@angular/core";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 import { PathfindGridComponent } from "./components/pathfind-grid/pathfind-grid.component";
-import { PathfindUnitComponent } from "./components/pathfind-unit/pathfind-unit.component";
+import { PathfindNodeComponent } from "./components/pathfind-node/pathfind-node.component";
 import { PathfindRoutingModule } from "./pathfind-routing.module";
 import { PathfindComponent } from "./pathfind.container";
 
 @NgModule({
   declarations: [
     PathfindComponent,
-    PathfindUnitComponent,
+    PathfindNodeComponent,
     PathfindGridComponent,
   ],
   imports: [

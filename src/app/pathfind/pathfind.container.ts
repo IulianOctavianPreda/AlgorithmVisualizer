@@ -6,7 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./pathfind.container.scss"],
 })
 export class PathfindComponent implements OnInit {
-  unit = { isSelected: false };
+  node = { isSelected: false };
   constructor() {}
 
   ngOnInit(): void {}

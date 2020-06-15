@@ -1,1 +1,1 @@
-export const PATHFIND_UNIT_SIZE = 40;
+export const PATHFIND_NODE_SIZE = 40;

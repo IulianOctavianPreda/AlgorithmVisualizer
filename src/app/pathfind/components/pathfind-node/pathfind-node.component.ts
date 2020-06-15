@@ -1,13 +1,13 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 
-import { PathfindUnit } from "./../../types/unit";
-import { PATHFIND_UNIT_SIZE } from "./../constants/constants";
+import { PATHFIND_NODE_SIZE } from "../constants/constants";
+import { PathfindNode } from "./../../types/pathfind-node";
 
 @Component({
-  selector: "app-pathfind-unit",
-  templateUrl: "./pathfind-unit.component.html",
-  styleUrls: ["./pathfind-unit.component.scss"],
+  selector: "app-pathfind-node",
+  templateUrl: "./pathfind-node.component.html",
+  styleUrls: ["./pathfind-node.component.scss"],
   animations: [
     trigger("animationTrigger", [
       state(
@@ -35,26 +35,26 @@ import { PATHFIND_UNIT_SIZE } from "./../constants/constants";
     ]),
   ],
 })
-export class PathfindUnitComponent implements OnInit, OnChanges {
-  @Input() unit: PathfindUnit;
+export class PathfindNodeComponent implements OnInit, OnChanges {
+  @Input() node: PathfindNode;
 
-  @Output() unitUpdate = new EventEmitter<PathfindUnit>();
+  @Output() nodeUpdate = new EventEmitter<PathfindNode>();
 
-  unitSize = PATHFIND_UNIT_SIZE;
+  nodeSize = PATHFIND_NODE_SIZE;
 
   animationTrigger() {
-    if (!this.unit?.isFinishPoint && !this.unit?.isStartingPoint) {
-      if (this.unit?.isSolution) {
+    if (!this.node?.isFinishPoint && !this.node?.isStartingPoint) {
+      if (this.node?.isSolution) {
         return "isSolution";
       } else {
-        return this.unit.isSelected ? "true" : "false";
+        return this.node.isSelected ? "true" : "false";
       }
     }
   }
 
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.unit.currentValue) {
+    if (changes.node.currentValue) {
       this.animationTrigger();
     }
   }

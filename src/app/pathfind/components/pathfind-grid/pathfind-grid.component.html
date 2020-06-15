@@ -3,35 +3,35 @@
     <div>
       <ng-container *ngFor="let row of grid; index as i">
         <div class="container-flex flex-direction-row centered-flex">
-          <app-pathfind-unit
-            *ngFor="let unit of row"
-            [unit]="unit"
-            (drop)="onDrop($event, unit)"
+          <app-pathfind-node
+            *ngFor="let node of row"
+            [node]="node"
+            (drop)="onDrop($event, node)"
             (dragover)="allowDrag($event)"
-            (mousedown)="onMouseDown(unit)"
-            (mouseup)="onMouseUp(unit)"
-            (mouseover)="onMouseOver(unit)"
-            (tap)="onTap(unit)"
+            (mousedown)="onMouseDown(node)"
+            (mouseup)="onMouseUp(node)"
+            (mouseover)="onMouseOver(node)"
+            (tap)="onTap(node)"
           >
             <div
-              *ngIf="unit.isFinishPoint || unit.isStartingPoint"
+              *ngIf="node.isFinishPoint || node.isStartingPoint"
               class="container-centered-flex"
             >
-              <span (dragstart)="onDrag($event, unit)" draggable="true">
+              <span (dragstart)="onDrag($event, node)" draggable="true">
                 <fa-icon
-                  *ngIf="unit.isFinishPoint"
+                  *ngIf="node.isFinishPoint"
                   [icon]="flagIcon"
                   [size]="'lg'"
                 ></fa-icon>
                 <fa-icon
-                  *ngIf="unit.isStartingPoint"
+                  *ngIf="node.isStartingPoint"
                   [icon]="actorIcon"
                   [size]="'2x'"
                   style="color: darkmagenta;"
                 ></fa-icon>
               </span>
             </div>
-          </app-pathfind-unit>
+          </app-pathfind-node>
         </div>
       </ng-container>
     </div>

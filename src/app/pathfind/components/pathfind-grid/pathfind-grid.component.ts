@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
 
-import { PathfindUnit } from "./../../types/unit";
-import { PATHFIND_UNIT_SIZE } from "./../constants/constants";
+import { PathfindNode } from "./../../types/pathfind-node";
+import { PATHFIND_NODE_SIZE } from "./../constants/constants";
 
 @Component({
   selector: "app-pathfind-grid",
@@ -14,7 +14,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
 
   gridHeight = 0;
   gridWidth = 0;
-  grid: Array<Array<PathfindUnit>> = [];
+  grid: Array<Array<PathfindNode>> = [];
 
   flagIcon = faFlag;
   actorIcon = faMale;
@@ -43,21 +43,21 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   }
 
   createGrid() {
-    const rows = Math.floor(this.gridHeight / PATHFIND_UNIT_SIZE);
-    const cols = Math.floor(this.gridWidth / PATHFIND_UNIT_SIZE);
+    const rows = Math.floor(this.gridHeight / PATHFIND_NODE_SIZE);
+    const cols = Math.floor(this.gridWidth / PATHFIND_NODE_SIZE);
 
     const grid = [];
     for (let row = 0; row < rows; row++) {
       const colArray = [];
       for (let col = 0; col < cols; col++) {
-        colArray.push(this.createPathfindUnit(row, col, rows, cols));
+        colArray.push(this.createPathfindNode(row, col, rows, cols));
       }
       grid.push(colArray);
     }
     return grid;
   }
 
-  createPathfindUnit(row: number, col: number, rows: number, cols: number) {
+  createPathfindNode(row: number, col: number, rows: number, cols: number) {
     if (cols > rows) {
       const initialRowPosition = Math.floor(rows / 2);
       const initialColStartingPosition = 2;
@@ -87,11 +87,11 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // copyUsableValuesFromOldGrid(oldGrid: Array<Array<PathfindUnit>>) {
+  // copyUsableValuesFromOldGrid(oldGrid: Array<Array<PathfindNode>>) {
   //   for (let row = 0; row < this.grid.length; row++) {
   //     for (let col = 0; col < this.grid[row].length; col++) {
   //       if (!!oldGrid[row][col]) {
-  //         this.copyPathfindUnitProperties(
+  //         this.copyPathfindNodeProperties(
   //           oldGrid[row][col],
   //           this.grid[row][col]
   //         );
@@ -100,26 +100,26 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   //   }
   // }
 
-  copyPathfindUnitProperties(source: PathfindUnit, destination: PathfindUnit) {
+  copyPathfindNodeProperties(source: PathfindNode, destination: PathfindNode) {
     destination.isFinishPoint = source.isFinishPoint;
     destination.isSelected = source.isSelected;
     destination.isSolution = source.isSolution;
     destination.isStartingPoint = source.isSelected;
   }
 
-  selectedUnit: PathfindUnit;
+  selectedNode: PathfindNode;
 
-  onDrag(event: DragEvent, unit: PathfindUnit) {
+  onDrag(event: DragEvent, node: PathfindNode) {
     this.mouseDown = false;
-    this.selectedUnit = unit;
+    this.selectedNode = node;
 
-    // event.dataTransfer.setData("draggedUnit", JSON.stringify(unit));
+    // event.dataTransfer.setData("draggedNode", JSON.stringify(node));
   }
 
-  onDrop(event: DragEvent, unit: PathfindUnit) {
+  onDrop(event: DragEvent, node: PathfindNode) {
     event.preventDefault();
-    // const data = JSON.parse(event.dataTransfer.getData("draggedUnit"));
-    this.copyPathfindUnitProperties(this.selectedUnit, unit);
+    // const data = JSON.parse(event.dataTransfer.getData("draggedNode"));
+    this.copyPathfindNodeProperties(this.selectedNode, node);
   }
 
   allowDrag(event) {
@@ -127,49 +127,48 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     event.preventDefault();
   }
 
-  onMouseDown(data: PathfindUnit) {
+  onMouseDown(data: PathfindNode) {
     this.mouseDown = true;
-    this.unitUpdate(data);
+    this.nodeUpdate(data);
   }
 
-  onMouseUp(data: PathfindUnit) {
+  onMouseUp(data: PathfindNode) {
     this.mouseDown = false;
   }
 
-  onMouseOver(data: PathfindUnit) {
+  onMouseOver(data: PathfindNode) {
     if (this.mouseDown) {
-      this.unitUpdate(data);
+      this.nodeUpdate(data);
     }
   }
 
-  onTap(data: PathfindUnit) {
+  onTap(data: PathfindNode) {
     console.log("tap");
-    this.unitUpdate(data);
+    this.nodeUpdate(data);
   }
 
-  onPan(data: PathfindUnit) {
-    this.unitUpdate(data);
+  onPan(data: PathfindNode) {
+    this.nodeUpdate(data);
   }
 
   // isPressed = false;
-  // onPress(data: PathfindUnit) {
+  // onPress(data: PathfindNode) {
   //   this.isPressed = true;
-  //   this.selectedUnit = data;
+  //   this.selectedNode = data;
   // }
 
-  // onPressUp(data: PathfindUnit) {
+  // onPressUp(data: PathfindNode) {
   //   if (this.isPressed) {
   //     this.isPressed = false;
-  //     this.copyPathfindUnitProperties(this.selectedUnit, data);
+  //     this.copyPathfindNodeProperties(this.selectedNode, data);
   //   }
   // }
 
-  unitUpdate(data) {
+  nodeUpdate(data) {
     this.grid.forEach((arr) => {
-      let a = arr.find((x) => x.id === data.id);
-      console.log(a);
-      if (!!a) {
-        a.isSelected = !a.isSelected;
+      let node = arr.find((x) => x.id === data.id);
+      if (!!node) {
+        node.isSelected = !node.isSelected;
       }
     });
   }
