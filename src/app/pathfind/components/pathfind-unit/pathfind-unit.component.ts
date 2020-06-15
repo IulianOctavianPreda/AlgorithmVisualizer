@@ -13,7 +13,7 @@ import { PATHFIND_UNIT_SIZE } from "./../constants/constants";
       state(
         "true",
         style({
-          backgroundColor: "yellow",
+          backgroundColor: "black",
         })
       ),
       state(

@@ -1,27 +1,39 @@
 <div class="container-centered-flex">
-  <div class="w-95 h-95" #gridRef>
-    <ng-container *ngFor="let row of grid; index as i">
-      <div class="container-flex flex-direction-row">
-        <app-pathfind-unit
-          *ngFor="let unit of row"
-          [unit]="unit"
-          (drop)="onDrop($event, unit)"
-          (dragover)="allowDrag($event)"
-          (mousedown)="onMouseDown(unit)"
-          (mouseup)="onMouseUp(unit)"
-          (mouseover)="onMouseOver(unit)"
-        >
-          <div
-            *ngIf="unit.isFinishPoint || unit.isStartingPoint"
-            class="container-centered-flex"
+  <div class="w-95 h-95 d-flex centered-flex" #gridRef>
+    <div>
+      <ng-container *ngFor="let row of grid; index as i">
+        <div class="container-flex flex-direction-row centered-flex">
+          <app-pathfind-unit
+            *ngFor="let unit of row"
+            [unit]="unit"
+            (drop)="onDrop($event, unit)"
+            (dragover)="allowDrag($event)"
+            (mousedown)="onMouseDown(unit)"
+            (mouseup)="onMouseUp(unit)"
+            (mouseover)="onMouseOver(unit)"
+            (tap)="onTap(unit)"
           >
-            <span (dragstart)="onDrag($event, unit)" draggable="true">
-              <fa-icon *ngIf="unit.isFinishPoint" [icon]="flagIcon"></fa-icon>
-              <fa-icon *ngIf="unit.isStartingPoint" [icon]="starIcon"></fa-icon>
-            </span>
-          </div>
-        </app-pathfind-unit>
-      </div>
-    </ng-container>
+            <div
+              *ngIf="unit.isFinishPoint || unit.isStartingPoint"
+              class="container-centered-flex"
+            >
+              <span (dragstart)="onDrag($event, unit)" draggable="true">
+                <fa-icon
+                  *ngIf="unit.isFinishPoint"
+                  [icon]="flagIcon"
+                  [size]="'lg'"
+                ></fa-icon>
+                <fa-icon
+                  *ngIf="unit.isStartingPoint"
+                  [icon]="actorIcon"
+                  [size]="'2x'"
+                  style="color: darkmagenta;"
+                ></fa-icon>
+              </span>
+            </div>
+          </app-pathfind-unit>
+        </div>
+      </ng-container>
+    </div>
   </div>
 </div>

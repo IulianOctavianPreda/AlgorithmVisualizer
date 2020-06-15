@@ -1,5 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
-import { faFlagCheckered, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
 
 import { PathfindUnit } from "./../../types/unit";
 import { PATHFIND_UNIT_SIZE } from "./../constants/constants";
@@ -16,8 +16,8 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   gridWidth = 0;
   grid: Array<Array<PathfindUnit>> = [];
 
-  flagIcon = faFlagCheckered;
-  starIcon = faStar;
+  flagIcon = faFlag;
+  actorIcon = faMale;
   mouseDown = false;
 
   constructor(private changeDetection: ChangeDetectorRef) {}
@@ -92,16 +92,19 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     destination.isStartingPoint = source.isSelected;
   }
 
+  selectedUnit: PathfindUnit;
+
   onDrag(event: DragEvent, unit: PathfindUnit) {
     this.mouseDown = false;
+    this.selectedUnit = unit;
 
-    event.dataTransfer.setData("draggedUnit", JSON.stringify(unit));
+    // event.dataTransfer.setData("draggedUnit", JSON.stringify(unit));
   }
 
   onDrop(event: DragEvent, unit: PathfindUnit) {
     event.preventDefault();
-    const data = JSON.parse(event.dataTransfer.getData("draggedUnit"));
-    this.copyPathfindUnitProperties(data, unit);
+    // const data = JSON.parse(event.dataTransfer.getData("draggedUnit"));
+    this.copyPathfindUnitProperties(this.selectedUnit, unit);
   }
 
   allowDrag(event) {
@@ -113,14 +116,38 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     this.mouseDown = true;
     this.unitUpdate(data);
   }
+
   onMouseUp(data: PathfindUnit) {
     this.mouseDown = false;
   }
+
   onMouseOver(data: PathfindUnit) {
     if (this.mouseDown) {
       this.unitUpdate(data);
     }
   }
+
+  onTap(data: PathfindUnit) {
+    console.log("tap");
+    this.unitUpdate(data);
+  }
+
+  onPan(data: PathfindUnit) {
+    this.unitUpdate(data);
+  }
+
+  // isPressed = false;
+  // onPress(data: PathfindUnit) {
+  //   this.isPressed = true;
+  //   this.selectedUnit = data;
+  // }
+
+  // onPressUp(data: PathfindUnit) {
+  //   if (this.isPressed) {
+  //     this.isPressed = false;
+  //     this.copyPathfindUnitProperties(this.selectedUnit, data);
+  //   }
+  // }
 
   unitUpdate(data) {
     this.grid.forEach((arr) => {
