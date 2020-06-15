@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, HammerModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -13,6 +13,7 @@ import { CodeEditorModule } from "./code-editor/code-editor.module";
     BrowserAnimationsModule,
     AppRoutingModule,
     CodeEditorModule,
+    HammerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
