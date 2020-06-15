@@ -58,18 +58,33 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   }
 
   createPathfindUnit(row: number, col: number, rows: number, cols: number) {
-    const initialRowPosition = Math.floor(rows / 2);
-    const initialColStartingPosition = 3;
-    const initialColFinishPosition = cols - 3;
-    return {
-      id: row * cols + col,
-      isSelected: false,
-      isSolution: false,
-      isStartingPoint:
-        row === initialRowPosition && col === initialColStartingPosition,
-      isFinishPoint:
-        row === initialRowPosition && col === initialColFinishPosition,
-    };
+    if (cols > rows) {
+      const initialRowPosition = Math.floor(rows / 2);
+      const initialColStartingPosition = 2;
+      const initialColFinishPosition = cols - 2;
+      return {
+        id: row * cols + col,
+        isSelected: false,
+        isSolution: false,
+        isStartingPoint:
+          row === initialRowPosition && col === initialColStartingPosition,
+        isFinishPoint:
+          row === initialRowPosition && col === initialColFinishPosition,
+      };
+    } else {
+      const initialColPosition = Math.floor(cols / 2);
+      const initialRowStartingPosition = 2;
+      const initialRowFinishPosition = rows - 2;
+      return {
+        id: row * cols + col,
+        isSelected: false,
+        isSolution: false,
+        isStartingPoint:
+          row === initialRowStartingPosition && col === initialColPosition,
+        isFinishPoint:
+          row === initialRowFinishPosition && col === initialColPosition,
+      };
+    }
   }
 
   // copyUsableValuesFromOldGrid(oldGrid: Array<Array<PathfindUnit>>) {
