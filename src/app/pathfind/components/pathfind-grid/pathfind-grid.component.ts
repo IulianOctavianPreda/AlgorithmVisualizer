@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
 
+import { dijkstra } from "../../algorithms/dijkstra";
 import { PathfindNode } from "./../../types/pathfind-node";
 import { PATHFIND_NODE_SIZE } from "./../constants/constants";
 
@@ -48,7 +49,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
       row.forEach((node) => {
         node.distance = Infinity;
         node.isVisited = false;
-        node.isWall = false;
+        // node.isWall = false;
         node.isSolution = false;
         node.previouslyVisitedNode = null;
       });
@@ -195,7 +196,31 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
       const foundNode = arr.find((x) => x.id === node.id);
       if (!!foundNode) {
         foundNode.isWall = !foundNode.isWall;
+        foundNode.distance = Infinity;
+        foundNode.isVisited = false;
+        foundNode.isSolution = false;
       }
     });
+  }
+
+  flattenNodeMatrix(grid: PathfindNode[][]): PathfindNode[] {
+    const nodes: PathfindNode[] = [];
+    for (const row of grid) {
+      for (const node of row) {
+        nodes.push(node);
+      }
+    }
+    return nodes;
+  }
+
+  runDis() {
+    console.log("aaa");
+    this.softResetGrid();
+    const arr = this.flattenNodeMatrix(this.grid);
+    const startingNode = arr.find((x) => x.isStartingNode);
+    const finishingNode = arr.find((x) => x.isFinishingNode);
+
+    const output = dijkstra(this.grid, startingNode, finishingNode);
+    console.log(output);
   }
 }
