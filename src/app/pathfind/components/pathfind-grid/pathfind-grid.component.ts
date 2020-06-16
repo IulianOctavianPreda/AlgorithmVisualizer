@@ -160,6 +160,8 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     event.preventDefault();
     node.isFinishingNode = this.selectedNode.isFinishingNode;
     node.isStartingNode = this.selectedNode.isStartingNode;
+    this.selectedNode.isFinishingNode = false;
+    this.selectedNode.isStartingNode = false;
     this.selectedNode = null;
   }
 
