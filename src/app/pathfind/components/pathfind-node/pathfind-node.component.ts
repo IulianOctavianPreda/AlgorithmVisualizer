@@ -1,8 +1,8 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
+import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
 
 import { PATHFIND_NODE_SIZE_PX } from "../constants/constants";
-import { PathfindNode } from "./../../types/pathfind-node";
 import { AnimationStates } from "./animation-states";
 
 @Component({

@@ -1,6 +1,5 @@
-import { PathfindNode } from "src/app/pathfind/types/pathfind-node";
-
-import { PathfindOutput } from "./../types/pathfind-output";
+import { PathfindNode } from "../../types/pathfind/pathfind-node";
+import { PathfindOutput } from "../../types/pathfind/pathfind-output";
 
 export function dijkstra(
   grid: PathfindNode[][],
@@ -93,6 +92,10 @@ function getShortestPath(finishNode: PathfindNode) {
   return shortestPath;
 }
 
-// toString() {
-//   return super.serializeToFunctions();
-// }
+export function dijkstraJs() {
+  return "";
+}
+
+export function dijkstraTs() {
+  return "";
+}

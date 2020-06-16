@@ -1,8 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
+import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
 
-import { dijkstra } from "../../algorithms/dijkstra";
-import { PathfindNode } from "./../../types/pathfind-node";
 import { PATHFIND_NODE_SIZE_PX } from "./../constants/constants";
 
 @Component({
@@ -21,6 +20,8 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   actorIcon = faMale;
   mouseDown = false;
   selectedNode: PathfindNode;
+  startingNode: PathfindNode;
+  finishingNode: PathfindNode;
 
   constructor(private changeDetection: ChangeDetectorRef) {}
 
@@ -158,10 +159,18 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
 
   onDrop(event: DragEvent, node: PathfindNode) {
     event.preventDefault();
-    node.isFinishingNode = this.selectedNode.isFinishingNode;
-    node.isStartingNode = this.selectedNode.isStartingNode;
-    this.selectedNode.isFinishingNode = false;
-    this.selectedNode.isStartingNode = false;
+    if (this.selectedNode.isStartingNode) {
+      node.isStartingNode = this.selectedNode.isStartingNode;
+      this.selectedNode.isStartingNode = false;
+      this.startingNode = node;
+    }
+
+    if (this.selectedNode.isFinishingNode) {
+      node.isFinishingNode = this.selectedNode.isFinishingNode;
+      this.selectedNode.isFinishingNode = false;
+      this.finishingNode = node;
+    }
+
     this.selectedNode = null;
   }
 
@@ -205,24 +214,24 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     });
   }
 
-  flattenNodeMatrix(grid: PathfindNode[][]): PathfindNode[] {
-    const nodes: PathfindNode[] = [];
-    for (const row of grid) {
-      for (const node of row) {
-        nodes.push(node);
-      }
-    }
-    return nodes;
-  }
+  // flattenNodeMatrix(grid: PathfindNode[][]): PathfindNode[] {
+  //   const nodes: PathfindNode[] = [];
+  //   for (const row of grid) {
+  //     for (const node of row) {
+  //       nodes.push(node);
+  //     }
+  //   }
+  //   return nodes;
+  // }
 
   runDis() {
-    console.log("aaa");
-    this.softResetGrid();
-    const arr = this.flattenNodeMatrix(this.grid);
-    const startingNode = arr.find((x) => x.isStartingNode);
-    const finishingNode = arr.find((x) => x.isFinishingNode);
-    console.log(startingNode, finishingNode);
-    const output = dijkstra(this.grid, startingNode, finishingNode);
-    console.log(output);
+    // console.log("aaa");
+    // this.softResetGrid();
+    // const arr = this.flattenNodeMatrix(this.grid);
+    // const startingNode = arr.find((x) => x.isStartingNode);
+    // const finishingNode = arr.find((x) => x.isFinishingNode);
+    // console.log(startingNode, finishingNode);
+    // const output = dijkstra(this.grid, startingNode, finishingNode);
+    // console.log(output);
   }
 }

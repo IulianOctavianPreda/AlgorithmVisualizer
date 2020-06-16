@@ -1,14 +1,27 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
+import { Language } from "../enums/language";
+import { Category } from "./../enums/category";
+
 @Injectable({
   providedIn: "root",
 })
 export class StateManagementService {
-  public code$ = new BehaviorSubject<any>(null);
-  public selectedLanguage$ = new BehaviorSubject<any>(null);
-  public selectedAlgorithm$ = new BehaviorSubject<any>(null);
-  public selectedCategory$ = new BehaviorSubject<any>(null);
+  public codeResults$ = new BehaviorSubject<any>(null);
+  public selectedLanguage$ = new BehaviorSubject<Language>(null);
+  public selectedAlgorithm$ = new BehaviorSubject<Algorithm>(null);
+  public selectedCategory$ = new BehaviorSubject<Category>(null);
 
-  constructor() {}
+  constructor() {
+    this.selectedCategory$.subscribe((x) => {
+      if (x === Category.Pathfind) {
+      }
+    });
+  }
 }
+
+// array de algoritmi per categorie
+// export toTs toJs per algoritm
+// enum cu ts/ fct/ js per algoritm
+// array facut din enumuri

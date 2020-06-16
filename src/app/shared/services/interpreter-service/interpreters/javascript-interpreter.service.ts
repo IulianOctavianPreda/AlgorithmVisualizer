@@ -18,7 +18,7 @@ export class JavascriptInterpreterService implements OnDestroy {
     }
 
     this.worker.onmessage = ({ data }) => {
-      this.stateManagement.code$.next(data);
+      this.stateManagement.codeResults$.next(data);
     };
   }
 
@@ -33,9 +33,9 @@ export class JavascriptInterpreterService implements OnDestroy {
       try {
         const responseFn = new Function(`${code} return main()`);
         const data = responseFn();
-        this.stateManagement.code$.next({ value: data });
+        this.stateManagement.codeResults$.next({ value: data });
       } catch (error) {
-        this.stateManagement.code$.next({ error });
+        this.stateManagement.codeResults$.next({ error });
       }
     }
   }

@@ -5,5 +5,6 @@ export enum Language {
   Javascript = "Javascript",
   Typescript = "Typescript",
 }
+export type LanguageKeys = keyof typeof Language;
 
 export const Languages = enumToArray(Language);

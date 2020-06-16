@@ -31,7 +31,7 @@ export class CodeEditorComponent implements OnInit {
       code: "",
     });
 
-    this.stateManager.code$.subscribe(
+    this.stateManager.codeResults$.subscribe(
       (data: { value?: any; error?: Error }) => {
         if (data?.value) {
           // code logic
