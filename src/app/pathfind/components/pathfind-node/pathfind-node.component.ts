@@ -47,10 +47,10 @@ export class PathfindNodeComponent implements OnInit, OnChanges {
   nodeSize = PATHFIND_NODE_SIZE_PX;
 
   animationTrigger() {
+    if (this.node.isSolution) {
+      return AnimationStates.Solution;
+    }
     if (!this.node.isFinishingNode && !this.node.isStartingNode) {
-      if (this.node.isSolution) {
-        return AnimationStates.Solution;
-      }
       if (this.node.isVisited) {
         return AnimationStates.Visited;
       }
