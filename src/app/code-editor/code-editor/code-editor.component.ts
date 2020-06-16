@@ -23,8 +23,9 @@ export class CodeEditorComponent implements OnInit {
     private formatterService: FormatterService,
     private stateManager: StateManagementService
   ) {
+    console.log(Languages);
     this.formGroup = this.formBuilder.group({
-      language: Languages.find((x) => Language.Typescript === x.code).code,
+      language: Languages.find((x) => Language.Typescript === x.key).key,
       theme: null,
       algorithm: null,
       code: "",

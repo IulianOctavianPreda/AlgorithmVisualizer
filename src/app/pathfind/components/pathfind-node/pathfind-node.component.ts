@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 
-import { PATHFIND_NODE_SIZE } from "../constants/constants";
+import { PATHFIND_NODE_SIZE_PX } from "../constants/constants";
 import { PathfindNode } from "./../../types/pathfind-node";
 import { AnimationStates } from "./animation-states";
 
@@ -44,7 +44,7 @@ export class PathfindNodeComponent implements OnInit, OnChanges {
 
   @Output() nodeUpdate = new EventEmitter<PathfindNode>();
 
-  nodeSize = PATHFIND_NODE_SIZE;
+  nodeSize = PATHFIND_NODE_SIZE_PX;
 
   animationTrigger() {
     if (!this.node.isFinishingNode && !this.node.isStartingNode) {

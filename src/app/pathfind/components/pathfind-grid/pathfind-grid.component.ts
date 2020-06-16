@@ -3,7 +3,7 @@ import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
 
 import { dijkstra } from "../../algorithms/dijkstra";
 import { PathfindNode } from "./../../types/pathfind-node";
-import { PATHFIND_NODE_SIZE } from "./../constants/constants";
+import { PATHFIND_NODE_SIZE_PX } from "./../constants/constants";
 
 @Component({
   selector: "app-pathfind-grid",
@@ -58,8 +58,8 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   }
 
   createGrid(): PathfindNode[][] {
-    const rows = Math.floor(this.gridHeight / PATHFIND_NODE_SIZE);
-    const cols = Math.floor(this.gridWidth / PATHFIND_NODE_SIZE);
+    const rows = Math.floor(this.gridHeight / PATHFIND_NODE_SIZE_PX);
+    const cols = Math.floor(this.gridWidth / PATHFIND_NODE_SIZE_PX);
 
     const grid = [];
     for (let row = 0; row < rows; row++) {
@@ -221,7 +221,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     const arr = this.flattenNodeMatrix(this.grid);
     const startingNode = arr.find((x) => x.isStartingNode);
     const finishingNode = arr.find((x) => x.isFinishingNode);
-
+    console.log(startingNode, finishingNode);
     const output = dijkstra(this.grid, startingNode, finishingNode);
     console.log(output);
   }
