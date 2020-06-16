@@ -1,7 +1,12 @@
 export interface PathfindNode {
-  id?: number;
-  isSelected?: boolean;
-  isSolution?: boolean;
-  isStartingPoint?: boolean;
-  isFinishPoint?: boolean;
+  id: number;
+  col: number;
+  row: number;
+  distance: number;
+  isWall: boolean;
+  isSolution: boolean;
+  isVisited: boolean;
+  isStartingNode: boolean;
+  isFinishingNode: boolean;
+  previouslyVisitedNode: PathfindNode;
 }

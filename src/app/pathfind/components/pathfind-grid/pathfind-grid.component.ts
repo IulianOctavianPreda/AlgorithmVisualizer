@@ -14,7 +14,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
 
   gridHeight = 0;
   gridWidth = 0;
-  grid: Array<Array<PathfindNode>> = [];
+  grid: PathfindNode[][] = [];
 
   flagIcon = faFlag;
   actorIcon = faMale;
@@ -43,7 +43,20 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     this.changeDetection.detectChanges();
   }
 
-  createGrid(): Array<Array<PathfindNode>> {
+  softResetGrid(): void {
+    this.grid.forEach((row: PathfindNode[]) => {
+      row.forEach((node) => {
+        node.distance = Infinity;
+        node.isVisited = false;
+        node.isWall = false;
+        node.isSolution = false;
+        node.previouslyVisitedNode = null;
+      });
+    });
+    this.changeDetection.detectChanges();
+  }
+
+  createGrid(): PathfindNode[][] {
     const rows = Math.floor(this.gridHeight / PATHFIND_NODE_SIZE);
     const cols = Math.floor(this.gridWidth / PATHFIND_NODE_SIZE);
 
@@ -70,12 +83,17 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
       const initialColFinishPosition = cols - 2;
       return {
         id: row * cols + col,
-        isSelected: false,
+        col,
+        row,
+        distance: Infinity,
+        isVisited: false,
+        isWall: false,
         isSolution: false,
-        isStartingPoint:
+        isStartingNode:
           row === initialRowPosition && col === initialColStartingPosition,
-        isFinishPoint:
+        isFinishingNode:
           row === initialRowPosition && col === initialColFinishPosition,
+        previouslyVisitedNode: null,
       };
     } else {
       const initialColPosition = Math.floor(cols / 2);
@@ -83,17 +101,22 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
       const initialRowFinishPosition = rows - 2;
       return {
         id: row * cols + col,
-        isSelected: false,
+        col,
+        row,
+        distance: Infinity,
+        isVisited: false,
+        isWall: false,
         isSolution: false,
-        isStartingPoint:
+        isStartingNode:
           row === initialRowStartingPosition && col === initialColPosition,
-        isFinishPoint:
+        isFinishingNode:
           row === initialRowFinishPosition && col === initialColPosition,
+        previouslyVisitedNode: null,
       };
     }
   }
 
-  // copyUsableValuesFromOldGrid(oldGrid: Array<Array<PathfindNode>>): void {
+  // copyUsableValuesFromOldGrid(oldGrid: PathfindNode[][]): void {
   //   let hasStartingPoint = false;
   //   let hasFinishPoint = false;
   //   for (let row = 0; row < this.grid.length; row++) {
@@ -117,12 +140,15 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   //   }
   // }
 
-  copyPathfindNodeProperties(source: PathfindNode, destination: PathfindNode) {
-    destination.isFinishPoint = source.isFinishPoint;
-    destination.isSelected = source.isSelected;
-    destination.isSolution = source.isSolution;
-    destination.isStartingPoint = source.isSelected;
-  }
+  // copyPathfindNodeProperties(source: PathfindNode, destination: PathfindNode) {
+  //   destination.isWall = source.isWall;
+  //   destination.isSolution = source.isSolution;
+  //   destination.isFinishPoint = source.isFinishPoint;
+  //   destination.isStartingPoint = source.isStartingPoint;
+  //   destination.distance = source.distance;
+  //   destination.isVisited = source.isVisited;
+  //   destination.previouslyVisitedNode = source.previouslyVisitedNode;
+  // }
 
   onDrag(node: PathfindNode) {
     this.mouseDown = false;
@@ -131,7 +157,8 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
 
   onDrop(event: DragEvent, node: PathfindNode) {
     event.preventDefault();
-    this.copyPathfindNodeProperties(this.selectedNode, node);
+    node.isFinishingNode = this.selectedNode.isFinishingNode;
+    node.isStartingNode = this.selectedNode.isStartingNode;
     this.selectedNode = null;
   }
 
@@ -159,11 +186,15 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     this.nodeUpdate(node);
   }
 
+  onClick(node: PathfindNode) {
+    this.nodeUpdate(node);
+  }
+
   nodeUpdate(node: PathfindNode) {
     this.grid.forEach((arr) => {
       const foundNode = arr.find((x) => x.id === node.id);
       if (!!foundNode) {
-        foundNode.isSelected = !foundNode.isSelected;
+        foundNode.isWall = !foundNode.isWall;
       }
     });
   }

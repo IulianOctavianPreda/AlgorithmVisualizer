@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 
 import { PATHFIND_NODE_SIZE } from "../constants/constants";
 import { PathfindNode } from "./../../types/pathfind-node";
+import { AnimationStates } from "./animation-states";
 
 @Component({
   selector: "app-pathfind-node",
@@ -11,27 +12,30 @@ import { PathfindNode } from "./../../types/pathfind-node";
   animations: [
     trigger("animationTrigger", [
       state(
-        "true",
+        `${AnimationStates.Wall}`,
         style({
           backgroundColor: "black",
         })
       ),
       state(
-        "false",
+        `${AnimationStates.Empty}`,
         style({
           backgroundColor: "transparent",
         })
       ),
       state(
-        "isSolution",
+        `${AnimationStates.Solution}`,
         style({
           backgroundColor: "green",
         })
       ),
-      transition("true => false", [animate("1s")]),
-      transition("false => true", [animate("1s")]),
-      transition("true => isSolution", [animate("1s")]),
-      transition("false => isSolution", [animate("1s")]),
+      state(
+        `${AnimationStates.Visited}`,
+        style({
+          backgroundColor: "cyan",
+        })
+      ),
+      transition(`* => *`, [animate("1s")]),
     ]),
   ],
 })
@@ -43,21 +47,27 @@ export class PathfindNodeComponent implements OnInit, OnChanges {
   nodeSize = PATHFIND_NODE_SIZE;
 
   animationTrigger() {
-    if (!this.node?.isFinishPoint && !this.node?.isStartingPoint) {
-      if (this.node?.isSolution) {
-        return "isSolution";
-      } else {
-        return this.node.isSelected ? "true" : "false";
+    if (!this.node.isFinishingNode && !this.node.isStartingNode) {
+      if (this.node.isSolution) {
+        return AnimationStates.Solution;
       }
+      if (this.node.isVisited) {
+        return AnimationStates.Visited;
+      }
+      if (this.node.isWall) {
+        return AnimationStates.Wall;
+      }
+      return AnimationStates.Empty;
     }
   }
 
   constructor() {}
+
+  ngOnInit(): void {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.node.currentValue) {
       this.animationTrigger();
     }
   }
-
-  ngOnInit(): void {}
 }

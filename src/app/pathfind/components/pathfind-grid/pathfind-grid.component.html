@@ -9,22 +9,23 @@
             (drop)="onDrop($event, node)"
             (dragover)="allowDrag($event)"
             (mousedown)="onMouseDown(node)"
-            (mouseup)="onMouseUp(node)"
+            (mouseup)="onMouseUp()"
             (mouseover)="onMouseOver(node)"
             (tap)="onTap(node)"
+            (click)="onClick(node)"
           >
             <div
-              *ngIf="node.isFinishPoint || node.isStartingPoint"
+              *ngIf="node.isFinishingNode || node.isStartingNode"
               class="container-centered-flex"
             >
-              <span (dragstart)="onDrag($event, node)" draggable="true">
+              <span (dragstart)="onDrag(node)" draggable="true">
                 <fa-icon
-                  *ngIf="node.isFinishPoint"
+                  *ngIf="node.isFinishingNode"
                   [icon]="flagIcon"
                   [size]="'lg'"
                 ></fa-icon>
                 <fa-icon
-                  *ngIf="node.isStartingPoint"
+                  *ngIf="node.isStartingNode"
                   [icon]="actorIcon"
                   [size]="'2x'"
                   style="color: darkmagenta;"
