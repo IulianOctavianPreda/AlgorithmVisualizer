@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, 
 import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
 import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
 
+import { PathfindAlgorithms } from "../../../shared/algorithms/pathfind/pathfind-algorithms";
 import { PATHFIND_NODE_SIZE_PX } from "./../constants/constants";
 
 @Component({
@@ -79,11 +80,18 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     rows: number,
     cols: number
   ): PathfindNode {
+    let node: PathfindNode = null;
+    let isStartingNode = false;
+    let isFinishingNode = false;
     if (cols > rows) {
       const initialRowPosition = Math.floor(rows / 2);
       const initialColStartingPosition = 2;
       const initialColFinishPosition = cols - 2;
-      return {
+      isStartingNode =
+        row === initialRowPosition && col === initialColStartingPosition;
+      isFinishingNode =
+        row === initialRowPosition && col === initialColFinishPosition;
+      node = {
         id: row * cols + col,
         col,
         row,
@@ -91,17 +99,20 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
         isVisited: false,
         isWall: false,
         isSolution: false,
-        isStartingNode:
-          row === initialRowPosition && col === initialColStartingPosition,
-        isFinishingNode:
-          row === initialRowPosition && col === initialColFinishPosition,
+        isStartingNode,
+        isFinishingNode,
         previouslyVisitedNode: null,
       };
     } else {
       const initialColPosition = Math.floor(cols / 2);
       const initialRowStartingPosition = 2;
       const initialRowFinishPosition = rows - 2;
-      return {
+      isStartingNode =
+        row === initialRowStartingPosition && col === initialColPosition;
+      isFinishingNode =
+        row === initialRowFinishPosition && col === initialColPosition;
+
+      node = {
         id: row * cols + col,
         col,
         row,
@@ -109,13 +120,18 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
         isVisited: false,
         isWall: false,
         isSolution: false,
-        isStartingNode:
-          row === initialRowStartingPosition && col === initialColPosition,
-        isFinishingNode:
-          row === initialRowFinishPosition && col === initialColPosition,
+        isStartingNode,
+        isFinishingNode,
         previouslyVisitedNode: null,
       };
     }
+    if (isStartingNode) {
+      this.startingNode = node;
+    }
+    if (isFinishingNode) {
+      this.finishingNode = node;
+    }
+    return node;
   }
 
   // copyUsableValuesFromOldGrid(oldGrid: PathfindNode[][]): void {
@@ -214,24 +230,13 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // flattenNodeMatrix(grid: PathfindNode[][]): PathfindNode[] {
-  //   const nodes: PathfindNode[] = [];
-  //   for (const row of grid) {
-  //     for (const node of row) {
-  //       nodes.push(node);
-  //     }
-  //   }
-  //   return nodes;
-  // }
-
   runDis() {
-    // console.log("aaa");
-    // this.softResetGrid();
-    // const arr = this.flattenNodeMatrix(this.grid);
-    // const startingNode = arr.find((x) => x.isStartingNode);
-    // const finishingNode = arr.find((x) => x.isFinishingNode);
-    // console.log(startingNode, finishingNode);
-    // const output = dijkstra(this.grid, startingNode, finishingNode);
-    // console.log(output);
+    this.softResetGrid();
+    const output = PathfindAlgorithms[0].nativeFunction({
+      grid: this.grid,
+      startingNode: this.startingNode,
+      finishingNode: this.finishingNode,
+    });
+    console.log(output);
   }
 }
