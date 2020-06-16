@@ -6,6 +6,8 @@ import { BehaviorSubject } from "rxjs";
 })
 export class StateManagementService {
   public code$ = new BehaviorSubject<any>(null);
+  public selectedLanguage$ = new BehaviorSubject<any>(null);
+  public selectedAlgorithm$ = new BehaviorSubject<any>(null);
 
   constructor() {}
 }

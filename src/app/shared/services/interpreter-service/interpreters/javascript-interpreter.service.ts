@@ -1,6 +1,5 @@
 import { Injectable, OnDestroy } from "@angular/core";
-
-import { StateManagementService } from "../../../state-management/state-management.service";
+import { StateManagementService } from "src/app/shared/state-management/state-management.service";
 
 @Injectable({
   providedIn: "root",

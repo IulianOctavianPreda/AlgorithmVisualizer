@@ -1,11 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { Language, Languages } from "src/app/shared/enums/language";
+import { StateManagementService } from "src/app/shared/state-management/state-management.service";
 
-import { Language } from "../enums/language";
-import { FormatterService } from "../services/formatter/formatter.service";
-import { LanguageService } from "../services/language-service/language.service";
-import { Languages } from "./../models/code-editor-languages";
-import { StateManagementService } from "./../state-management/state-management.service";
+import { FormatterService } from "../../shared/services/formatter/formatter.service";
+import { LanguageService } from "../../shared/services/language-service/language.service";
 
 @Component({
   selector: "app-code-editor",
@@ -25,7 +24,7 @@ export class CodeEditorComponent implements OnInit {
     private stateManager: StateManagementService
   ) {
     this.formGroup = this.formBuilder.group({
-      language: Languages.find((x) => Language.Typescript === x.name).code,
+      language: Languages.find((x) => Language.Typescript === x.code).code,
       theme: null,
       algorithm: null,
       code: "",
