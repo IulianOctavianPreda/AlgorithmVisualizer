@@ -9,7 +9,7 @@
           [selectOnTab]="true"
           labelForId="algorithm"
           formControlName="algorithm"
-          [items]=""
+          [items]="availableAlgorithms"
           placeholder="Algorithm"
           bindLabel="name"
         ></ng-select>
@@ -23,7 +23,7 @@
           [selectOnTab]="true"
           labelForId="language"
           formControlName="language"
-          [items]="languages"
+          [items]="availableLanguages"
           placeholder="Language"
           bindLabel="name"
         ></ng-select>

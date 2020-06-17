@@ -13,3 +13,13 @@ export function enumToArray<E = EnumItem>(
     [enumContent]: key,
   })) as E[];
 }
+
+export function enumToObject<E>(enumObj: any): E {
+  const obj = {};
+  Object.keys(enumObj).map((key) => {
+    Object.assign(obj, {
+      [enumObj[key]]: key,
+    });
+  });
+  return obj as E;
+}

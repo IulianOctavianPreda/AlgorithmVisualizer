@@ -1,4 +1,4 @@
-import { enumToArray } from "../helpers/enum-helper";
+import { enumToArray, enumToObject } from "../helpers/enum-helper";
 
 export enum LanguageOption {
   Python = "python",
@@ -13,4 +13,9 @@ export interface ILanguage {
   name: LanguageKeys;
 }
 
+export type ILanguageObject = {
+  [value in LanguageOption]: LanguageKeys;
+};
+
 export const Languages = enumToArray<ILanguage>(LanguageOption);
+export const LanguagesObject = enumToObject<ILanguageObject>(LanguageOption);

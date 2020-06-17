@@ -1,4 +1,4 @@
-import { LanguageOption } from "../../enums/language-option";
+import { LanguageOption, LanguagesObject } from "../../enums/language-option";
 import { IPathfindAlgorithm } from "../../types/pathfind/pathfind-algorithm";
 import { dijkstra, dijkstraJs, dijkstraTs } from "./dijkstra";
 
@@ -7,11 +7,11 @@ export const PathfindAlgorithms: IPathfindAlgorithm[] = [
     name: "Dijkstra",
     nativeFunction: dijkstra,
     availableLanguages: [
-      LanguageOption[LanguageOption.Javascript],
-      LanguageOption[LanguageOption.Typescript],
+      LanguagesObject[LanguageOption.Javascript],
+      LanguagesObject[LanguageOption.Typescript],
     ],
-    [LanguageOption[LanguageOption.Javascript]]: dijkstraJs,
-    [LanguageOption[LanguageOption.Typescript]]: dijkstraTs,
+    [LanguagesObject[LanguageOption.Javascript]]: dijkstraJs(),
+    [LanguagesObject[LanguageOption.Typescript]]: dijkstraTs(),
   },
 ];
 

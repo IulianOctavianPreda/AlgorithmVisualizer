@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
-import { CategoryOption, ICategory } from "../enums/category-option";
+import { ICategory } from "../enums/category-option";
 import { ILanguage, Languages } from "../enums/language-option";
 import { IAlgorithmBase } from "../types/base/algorithm-base";
 import { IOutputBase } from "../types/base/output-base";
@@ -26,10 +26,8 @@ export class StateManagementService {
   constructor() {
     this.selectedCategory$.subscribe((category) => {
       if (!!category) {
-        if (category.id === CategoryOption.Pathfind) {
-          this.availableAlgorithms$.next(CategoryAlgorithms.Pathfind);
-          this.selectedAlgorithm$.next(CategoryAlgorithms.Pathfind[0]);
-        }
+        this.availableAlgorithms$.next(CategoryAlgorithms[category.name]);
+        this.selectedAlgorithm$.next(CategoryAlgorithms[category.name][0]);
       }
     });
 
