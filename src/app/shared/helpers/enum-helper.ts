@@ -1,11 +1,11 @@
 export interface EnumItem {
-  key: string;
+  id: string;
   name: string;
 }
 
 export function enumToArray<E = EnumItem>(
   enumObj: any,
-  enumKey = "key",
+  enumKey = "id",
   enumContent = "name"
 ): E[] {
   return Object.keys(enumObj).map((key) => ({

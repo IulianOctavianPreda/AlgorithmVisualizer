@@ -1,10 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { Language, Languages } from "src/app/shared/enums/language";
+import { LanguageOption, Languages } from "src/app/shared/enums/language";
 import { StateManagementService } from "src/app/shared/state-management/state-management.service";
 
 import { FormatterService } from "../../shared/services/formatter/formatter.service";
 import { LanguageService } from "../../shared/services/language-service/language.service";
+import { IAlgorithm } from "./../../shared/algorithms/algorithms";
 
 @Component({
   selector: "app-code-editor",
@@ -14,7 +15,6 @@ import { LanguageService } from "../../shared/services/language-service/language
 export class CodeEditorComponent implements OnInit {
   public formGroup: FormGroup;
   public error: string = null;
-  // public themes = Themes;
   public languages = Languages;
 
   constructor(
@@ -25,17 +25,13 @@ export class CodeEditorComponent implements OnInit {
   ) {
     console.log(Languages);
     this.formGroup = this.formBuilder.group({
-      language: Languages.find((x) => Language.Typescript === x.key).key,
-      theme: null,
-      algorithm: null,
+      language: Languages.find((x) => LanguageOption.Typescript === x.id).id, // TODO update from behavioural subject
+      algorithm: null as IAlgorithm,
       code: "",
     });
 
     this.stateManager.codeResults$.subscribe(
       (data: { value?: any; error?: Error }) => {
-        if (data?.value) {
-          // code logic
-        }
         if (data?.error) {
           this.error = data.error.message;
         }

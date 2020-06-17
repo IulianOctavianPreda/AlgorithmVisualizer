@@ -1,10 +1,15 @@
 import { enumToArray } from "../helpers/enum-helper";
 
-export enum Language {
-  Python = "Python",
-  Javascript = "Javascript",
-  Typescript = "Typescript",
+export enum LanguageOption {
+  Python = "python",
+  Javascript = "javascript",
+  Typescript = "typescript",
 }
-export type LanguageKeys = keyof typeof Language;
 
-export const Languages = enumToArray(Language);
+export interface ILanguage {
+  id: LanguageOption;
+  name: LanguageKeys;
+}
+
+export type LanguageKeys = keyof typeof LanguageOption;
+export const Languages = enumToArray<ILanguage>(LanguageOption);

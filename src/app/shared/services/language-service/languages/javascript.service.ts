@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Language } from "src/app/shared/enums/language";
+import { LanguageOption } from "src/app/shared/enums/language";
 
 import { InterpreterService } from "../../interpreter-service/interpreter.service";
 
@@ -10,6 +10,6 @@ export class JavascriptService {
   constructor(private interpreter: InterpreterService) {}
 
   public run(code: string): any {
-    return this.interpreter.interpret(code, Language.Javascript);
+    return this.interpreter.interpret(code, LanguageOption.Javascript);
   }
 }
