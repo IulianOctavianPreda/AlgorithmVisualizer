@@ -43,9 +43,7 @@ export class AlgorithmInlineWorker {
   }
 
   constructFunctionBody(func: string | (() => void), mainFunctionName): string {
-    console.log(func);
     let functionBody = typeof func === "string" ? func : func.toString();
-
     functionBody = `
       try{
         ${functionBody}
@@ -61,8 +59,6 @@ export class AlgorithmInlineWorker {
         this.postMessage({ error });
       }
       `;
-    console.log(functionBody);
-
     return functionBody;
   }
 }
