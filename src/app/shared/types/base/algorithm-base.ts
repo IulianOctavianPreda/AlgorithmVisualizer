@@ -7,5 +7,6 @@ export type ScriptedAlgorithm = {
 
 export interface IAlgorithmBase extends ScriptedAlgorithm {
   name: string;
+  availableLanguages: LanguageKeys[];
   nativeFunction: ({ data: IInput }) => IOutputBase;
 }

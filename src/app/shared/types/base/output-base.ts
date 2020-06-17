@@ -1,3 +1,4 @@
 export interface IOutputBase {
-  data: any;
+  data?: any;
+  error?: any;
 }

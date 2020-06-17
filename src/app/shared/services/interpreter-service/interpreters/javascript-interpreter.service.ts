@@ -33,7 +33,7 @@ export class JavascriptInterpreterService implements OnDestroy {
       try {
         const responseFn = new Function(`${code} return main()`);
         const data = responseFn();
-        this.stateManagement.codeResults$.next({ value: data });
+        this.stateManagement.codeResults$.next({ data });
       } catch (error) {
         this.stateManagement.codeResults$.next({ error });
       }

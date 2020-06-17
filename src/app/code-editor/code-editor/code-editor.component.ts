@@ -25,18 +25,16 @@ export class CodeEditorComponent implements OnInit {
   ) {
     console.log(Languages);
     this.formGroup = this.formBuilder.group({
-      language: Languages.find((x) => LanguageOption.Typescript === x.id).id, // TODO update from behavioural subject
+      language: Languages.find((x) => LanguageOption.Typescript === x.id), // TODO update from behavioural subject
       algorithm: null as IAlgorithmBase,
       code: "",
     });
 
-    this.stateManager.codeResults$.subscribe(
-      (data: { value?: any; error?: Error }) => {
-        if (data?.error) {
-          this.error = data.error.message;
-        }
+    this.stateManager.codeResults$.subscribe((data) => {
+      if (data?.error) {
+        this.error = data.error.message;
       }
-    );
+    });
   }
 
   ngOnInit(): void {}
@@ -50,13 +48,13 @@ export class CodeEditorComponent implements OnInit {
     const language = this.formGroup.get("language");
     const formattedCode = this.formatterService.format(
       code.value,
-      language.value
+      language.value.id
     );
     code.setValue(formattedCode);
   }
 
   run() {
     const formGroup = this.formGroup.value;
-    this.languageService.run(formGroup.code, formGroup.language);
+    this.languageService.run(formGroup.code, formGroup.language.id);
   }
 }

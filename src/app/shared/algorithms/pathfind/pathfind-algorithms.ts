@@ -6,6 +6,10 @@ export const PathfindAlgorithms: IPathfindAlgorithm[] = [
   {
     name: "Dijkstra",
     nativeFunction: dijkstra,
+    availableLanguages: [
+      LanguageOption[LanguageOption.Javascript],
+      LanguageOption[LanguageOption.Typescript],
+    ],
     [LanguageOption[LanguageOption.Javascript]]: dijkstraJs,
     [LanguageOption[LanguageOption.Typescript]]: dijkstraTs,
   },

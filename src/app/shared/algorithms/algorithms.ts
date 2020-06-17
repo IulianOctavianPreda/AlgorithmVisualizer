@@ -5,6 +5,6 @@ import { PathfindAlgorithms } from "./pathfind/pathfind-algorithms";
 
 export const Algorithms: IAlgorithmBase[] = [...PathfindAlgorithms];
 
-export const CategoryAlgorithms: ICategoryAlgorithm[] = [
-  { [CategoryOption[CategoryOption.Pathfind]]: [...PathfindAlgorithms] },
-];
+export const CategoryAlgorithms: ICategoryAlgorithm = {
+  [CategoryOption[CategoryOption.Pathfind]]: [...PathfindAlgorithms],
+};
