@@ -22,11 +22,13 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
       transition("close => open", [animate("0.3s ease-in-out")]),
     ]),
     trigger("visibleHidden", [
-      state("visible", style({})),
+      state("visible", style({ visibility: "visible", opacity: 1 })),
       state(
         "hidden",
         style({
           transform: "translateY(-100%)",
+          visibility: "hidden",
+          opacity: 0,
         })
       ),
       transition("visible => hidden", [animate("0.3s")]),

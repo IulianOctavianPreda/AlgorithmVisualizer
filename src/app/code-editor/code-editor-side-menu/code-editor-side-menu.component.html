@@ -4,13 +4,11 @@
   (panleft)="onPanLeft()"
 >
   <div class="col editor px-0" [@visibleHidden]="isOpen ? 'visible' : 'hidden'">
-    <app-code-editor></app-code-editor>
+    <app-code-editor
+      [ngClass]="{ 'remove-padding': !isOpen }"
+    ></app-code-editor>
   </div>
-  <div
-    (panright)="onPanRight()"
-    class="d-flex align-items-center"
-    [ngClass]="{ 'hide-arrow-mobile': isOpen }"
-  >
+  <div (panright)="onPanRight()" class="d-flex align-items-center">
     <div class="arrow-container">
       <fa-icon
         *ngIf="isOpen"
