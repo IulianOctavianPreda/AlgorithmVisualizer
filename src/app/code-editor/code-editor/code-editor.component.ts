@@ -5,7 +5,7 @@ import { takeUntil } from "rxjs/operators";
 import { StateManagementService } from "src/app/shared/state-management/state-management.service";
 
 import { FormatterService } from "../../shared/services/formatter/formatter.service";
-import { LanguageService } from "../../shared/services/language-service/language.service";
+import { ResultManagementService } from "./../../shared/state-management/result-management.service";
 
 @Component({
   selector: "app-code-editor",
@@ -22,9 +22,9 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private languageService: LanguageService,
     private formatterService: FormatterService,
-    private stateManager: StateManagementService
+    private stateManager: StateManagementService,
+    private resultManager: ResultManagementService
   ) {
     this.formGroup = this.formBuilder.group({
       language: null,
@@ -34,7 +34,7 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.stateManager.codeResults$
+    this.resultManager.codeResults$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
         if (data?.error) {
@@ -97,6 +97,13 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
       .subscribe((x) => {
         this.stateManager.selectedAlgorithm$.next(x);
       });
+
+    this.formGroup
+      .get("code")
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((x) => {
+        this.stateManager.code$.next(x);
+      });
   }
 
   ngOnDestroy(): void {
@@ -119,7 +126,6 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
   }
 
   run() {
-    const formGroup = this.formGroup.value;
-    this.languageService.run(formGroup.code, formGroup.language.id);
+    this.stateManager.runCode$.next();
   }
 }

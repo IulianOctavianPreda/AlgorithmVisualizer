@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
 
 import { ICategory } from "../enums/category-option";
 import { ILanguage, Languages } from "../enums/language-option";
+import { LanguageService } from "../services/language-service/language.service";
 import { IAlgorithmBase } from "../types/base/algorithm-base";
-import { IOutputBase } from "../types/base/output-base";
 import { CategoryAlgorithms } from "./../algorithms/algorithms";
+import { IInputBase } from "./../types/base/input-base";
 
 @Injectable({
   providedIn: "root",
@@ -15,15 +16,15 @@ export class StateManagementService {
   public selectedLanguage$ = new BehaviorSubject<ILanguage>(null);
   public selectedAlgorithm$ = new BehaviorSubject<IAlgorithmBase>(null);
 
-  public codeResults$ = new BehaviorSubject<IOutputBase>(null);
-
   public availableAlgorithms$ = new BehaviorSubject<IAlgorithmBase[]>(null);
   public availableLanguages$ = new BehaviorSubject<ILanguage[]>(null);
 
-  public code$ = new BehaviorSubject<IAlgorithmBase>(null);
-  public grid$ = new BehaviorSubject<IAlgorithmBase>(null);
+  public code$ = new BehaviorSubject<string>(null);
+  public data$ = new BehaviorSubject<IInputBase>(null);
 
-  constructor() {
+  public runCode$ = new Subject<void>();
+
+  constructor(private languageService: LanguageService) {
     this.selectedCategory$.subscribe((category) => {
       if (!!category) {
         this.availableAlgorithms$.next(CategoryAlgorithms[category.name]);
@@ -39,6 +40,14 @@ export class StateManagementService {
         this.availableLanguages$.next(availableLanguages);
         this.selectedLanguage$.next(availableLanguages[0]);
       }
+    });
+
+    this.runCode$.subscribe(() => {
+      this.languageService.run(
+        this.code$.value,
+        this.selectedLanguage$.value.id,
+        this.data$.value
+      );
     });
   }
 }

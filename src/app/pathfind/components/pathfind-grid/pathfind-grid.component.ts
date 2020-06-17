@@ -51,6 +51,13 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
       this.gridWidth,
       PATHFIND_NODE_SIZE_PX
     );
+    this.stateManager.data$.next({
+      data: {
+        grid: this.grid,
+        startingNode: this.service.startingNode,
+        finishingNode: this.service.finishingNode,
+      },
+    });
     this.changeDetection.detectChanges();
   }
 

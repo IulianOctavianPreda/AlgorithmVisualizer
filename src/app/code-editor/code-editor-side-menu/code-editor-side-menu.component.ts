@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, OnInit } from "@angular/core";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { ResultManagementService } from "src/app/shared/state-management/result-management.service";
 
 @Component({
   selector: "app-code-editor-side-menu",
@@ -42,9 +43,15 @@ export class CodeEditorSideMenuComponent implements OnInit {
 
   isOpen = false;
 
-  constructor() {}
+  constructor(private resultManager: ResultManagementService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.resultManager.codeResults$.subscribe((data) => {
+      if (data?.data) {
+        this.isOpen = false;
+      }
+    });
+  }
 
   onPanRight() {
     this.isOpen = true;
