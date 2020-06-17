@@ -1,18 +1,14 @@
-import { Language } from "../../enums/language";
-import { PathfindInput } from "../../types/pathfind/pathfind-input";
-import { PathfindOutput } from "../../types/pathfind/pathfind-output";
-import { IAlgorithm } from "../algorithms";
+import { LanguageOption } from "../../enums/language-option";
+import { IPathfindAlgorithm } from "../../types/pathfind/pathfind-algorithm";
 import { dijkstra, dijkstraJs, dijkstraTs } from "./dijkstra";
 
-export interface PathfindAlgorithm extends IAlgorithm {
-  nativeFunction: (obj: PathfindInput) => PathfindOutput;
-}
-
-export const PathfindAlgorithms: PathfindAlgorithm[] = [
+export const PathfindAlgorithms: IPathfindAlgorithm[] = [
   {
     name: "Dijkstra",
     nativeFunction: dijkstra,
-    [Language.Javascript]: dijkstraJs,
-    [Language.Typescript]: dijkstraTs,
+    [LanguageOption[LanguageOption.Javascript]]: dijkstraJs,
+    [LanguageOption[LanguageOption.Typescript]]: dijkstraTs,
   },
 ];
+
+// TODO for consistency and automation all algorithm types should respect the implementation of the other enums

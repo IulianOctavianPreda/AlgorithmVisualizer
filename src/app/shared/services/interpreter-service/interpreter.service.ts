@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { LanguageOption } from "../../enums/language";
+import { LanguageOption } from "../../enums/language-option";
 import { JavascriptInterpreterService } from "./interpreters/javascript-interpreter.service";
 
 @Injectable({

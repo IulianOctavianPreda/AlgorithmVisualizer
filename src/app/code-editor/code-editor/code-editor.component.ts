@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { LanguageOption, Languages } from "src/app/shared/enums/language";
+import { LanguageOption, Languages } from "src/app/shared/enums/language-option";
 import { StateManagementService } from "src/app/shared/state-management/state-management.service";
 
 import { FormatterService } from "../../shared/services/formatter/formatter.service";
 import { LanguageService } from "../../shared/services/language-service/language.service";
-import { IAlgorithm } from "./../../shared/algorithms/algorithms";
+import { IAlgorithmBase } from "../../shared/types/base/algorithm-base";
 
 @Component({
   selector: "app-code-editor",
@@ -26,7 +26,7 @@ export class CodeEditorComponent implements OnInit {
     console.log(Languages);
     this.formGroup = this.formBuilder.group({
       language: Languages.find((x) => LanguageOption.Typescript === x.id).id, // TODO update from behavioural subject
-      algorithm: null as IAlgorithm,
+      algorithm: null as IAlgorithmBase,
       code: "",
     });
 

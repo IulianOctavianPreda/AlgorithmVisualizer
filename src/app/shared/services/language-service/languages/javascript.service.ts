@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { LanguageOption } from "src/app/shared/enums/language";
+import { LanguageOption } from "src/app/shared/enums/language-option";
 
 import { InterpreterService } from "../../interpreter-service/interpreter.service";
 

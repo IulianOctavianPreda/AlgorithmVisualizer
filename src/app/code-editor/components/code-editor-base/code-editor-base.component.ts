@@ -5,6 +5,7 @@ import hljs from "highlight.js/lib/core";
 import javascript from "highlight.js/lib/languages/javascript";
 import python from "highlight.js/lib/languages/python";
 import typescript from "highlight.js/lib/languages/typescript";
+import { LanguageOption } from "src/app/shared/enums/language-option";
 
 @Component({
   selector: "app-code-editor-base",
@@ -21,7 +22,7 @@ import typescript from "highlight.js/lib/languages/typescript";
 export class CodeEditorBaseComponent implements OnInit, AfterViewInit {
   @ViewChild("editor") editor: ElementRef;
 
-  @Input() language: string;
+  @Input() language: LanguageOption;
 
   public codeEditor: CodeJar = null;
   private _code: string;

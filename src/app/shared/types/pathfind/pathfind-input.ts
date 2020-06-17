@@ -1,7 +1,10 @@
+import { IInputBase } from "../base/input-base";
 import { PathfindNode } from "./pathfind-node";
 
-export interface PathfindInput {
-  grid: PathfindNode[][];
-  startingNode: PathfindNode;
-  finishingNode: PathfindNode;
+export interface IPathfindInput extends IInputBase {
+  data: {
+    grid: PathfindNode[][];
+    startingNode: PathfindNode;
+    finishingNode: PathfindNode;
+  };
 }

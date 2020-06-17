@@ -1,16 +1,10 @@
-import { CategoryKeys } from "../enums/category";
-import { LanguageKeys } from "../enums/language";
+import { CategoryOption } from "../enums/category-option";
+import { IAlgorithmBase } from "../types/base/algorithm-base";
+import { ICategoryAlgorithm } from "../types/category-algorithm";
+import { PathfindAlgorithms } from "./pathfind/pathfind-algorithms";
 
-type CategoryAlgorithm = {
-  [key in CategoryKeys]?: IAlgorithm[]; // To be changed to programmatically be of the PathfindAlgorithm, SortAlgorithm etc.
-};
+export const Algorithms: IAlgorithmBase[] = [...PathfindAlgorithms];
 
-type ScriptedAlgorithm = {
-  [key in LanguageKeys]?: () => string;
-};
-
-export interface IAlgorithm extends ScriptedAlgorithm {
-  //   type: LanguageKeys | "nativeFunction";
-  name: string;
-  nativeFunction: Function;
-}
+export const CategoryAlgorithms: ICategoryAlgorithm[] = [
+  { [CategoryOption[CategoryOption.Pathfind]]: [...PathfindAlgorithms] },
+];

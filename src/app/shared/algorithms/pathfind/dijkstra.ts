@@ -1,15 +1,11 @@
-import { PathfindInput } from "../../types/pathfind/pathfind-input";
+import { IPathfindInput } from "../../types/pathfind/pathfind-input";
 import { PathfindNode } from "../../types/pathfind/pathfind-node";
-import { PathfindOutput } from "../../types/pathfind/pathfind-output";
+import { IPathfindOutput } from "../../types/pathfind/pathfind-output";
 
-export function dijkstra({
-  grid,
-  startingNode,
-  finishingNode,
-}: PathfindInput): PathfindOutput {
+export function dijkstra({ data }: IPathfindInput): IPathfindOutput {
   const visitedNodes: PathfindNode[] = [];
-  startingNode.distance = 0;
-  const unvisitedNodes = flattenNodeMatrix(grid);
+  data.startingNode.distance = 0;
+  const unvisitedNodes = flattenNodeMatrix(data.grid);
   while (!!unvisitedNodes.length) {
     sortNodesByDistance(unvisitedNodes);
     const closestNode = unvisitedNodes.shift();
@@ -19,20 +15,22 @@ export function dijkstra({
     }
 
     if (isStuck(closestNode)) {
-      return { visitedNodes, shortestPath: null };
+      return { data: { visitedNodes, shortestPath: null } };
     }
 
     closestNode.isVisited = true;
     visitedNodes.push(closestNode);
 
-    if (closestNode === finishingNode) {
+    if (closestNode === data.finishingNode) {
       return {
-        visitedNodes,
-        shortestPath: getShortestPath(finishingNode),
+        data: {
+          visitedNodes,
+          shortestPath: getShortestPath(data.finishingNode),
+        },
       };
     }
 
-    updateUnvisitedNeighbors(closestNode, grid);
+    updateUnvisitedNeighbors(closestNode, data.grid);
   }
 }
 

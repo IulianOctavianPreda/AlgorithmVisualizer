@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
+import { PathfindAlgorithms } from "src/app/shared/algorithms/pathfind/pathfind-algorithms";
 import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
 
-import { PathfindAlgorithms } from "../../../shared/algorithms/pathfind/pathfind-algorithms";
 import { PATHFIND_NODE_SIZE_PX } from "./../constants/constants";
 import { PathfindGridService } from "./services/pathfind-grid.service";
 
@@ -150,9 +150,11 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   runDis() {
     this.service.softResetGrid(this.grid, this.changeDetection);
     const output = PathfindAlgorithms[0].nativeFunction({
-      grid: this.grid,
-      startingNode: this.service.startingNode,
-      finishingNode: this.service.finishingNode,
+      data: {
+        grid: this.grid,
+        startingNode: this.service.startingNode,
+        finishingNode: this.service.finishingNode,
+      },
     });
     console.log(output);
   }
