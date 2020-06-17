@@ -7,7 +7,6 @@ import { IOutputBase } from "./../types/base/output-base";
 export class AlgorithmInlineWorker {
   private readonly worker: Worker;
   private message = new Subject<IOutputBase>();
-  private error = new Subject<ErrorEvent>();
 
   constructor(func: string | (() => void), mainFunctionName = "main") {
     const WORKER_ENABLED = !!Worker;
@@ -24,10 +23,6 @@ export class AlgorithmInlineWorker {
       this.worker.onmessage = (data) => {
         this.message.next(data.data);
       };
-
-      this.worker.onerror = (data) => {
-        this.error.next(data);
-      };
     } else {
       throw new Error("WebWorker is not enabled");
     }
@@ -41,10 +36,6 @@ export class AlgorithmInlineWorker {
     return this.message.asObservable();
   }
 
-  onError(): Observable<ErrorEvent> {
-    return this.error.asObservable();
-  }
-
   terminate() {
     if (this.worker) {
       this.worker.terminate();
@@ -55,23 +46,23 @@ export class AlgorithmInlineWorker {
     console.log(func);
     let functionBody = typeof func === "string" ? func : func.toString();
 
-    functionBody =
-      functionBody +
-      `
-      function runWebWorker(data) {
-        this.postMessage({ data: ${mainFunctionName}(data) });
-      }
+    functionBody = `
+      try{
+        ${functionBody}
+        function runWebWorker(data) {
+          this.postMessage({ data: ${mainFunctionName}(data) });
+        }
 
-      this.onmessage = (evt) => {
-        console.log(evt);
-        runWebWorker(evt.data);
-      };
+        this.onmessage = (evt) => {
+          console.log(evt);
+          runWebWorker(evt.data);
+        };
+      }catch (error){
+        this.postMessage({ error });
+      }
       `;
     console.log(functionBody);
 
     return functionBody;
   }
 }
-
-// make it as - post message({data: function()}) and do not strip the function headers
-// enclose function for each algorithm in another function
