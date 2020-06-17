@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { LanguageOption } from "../../enums/language-option";
+import { IInputBase } from "./../../types/base/input-base";
 import { TypescriptService } from "./languages/typescript.service";
 
 @Injectable({
@@ -8,9 +9,9 @@ import { TypescriptService } from "./languages/typescript.service";
 })
 export class LanguageService {
   constructor(private ts: TypescriptService) {}
-  run(code: string, language: LanguageOption) {
+  run(code: string, language: LanguageOption, data: IInputBase) {
     if (language === LanguageOption.Javascript || LanguageOption.Typescript) {
-      this.ts.run(code);
+      this.ts.run(code, data);
     }
   }
 }

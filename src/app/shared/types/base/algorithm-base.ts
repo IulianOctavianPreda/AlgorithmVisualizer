@@ -10,5 +10,9 @@ export interface IAlgorithmBase extends ScriptedAlgorithm {
   name: string;
   availableLanguages: LanguageKeys[];
   nativeFunction: ({ data }: IInputBase) => IOutputBase;
-  webWorkerFunction: () => void;
+  // webWorkerFunction: () => void;
 }
+
+// export interface IWebWorkerFunction{
+
+// }

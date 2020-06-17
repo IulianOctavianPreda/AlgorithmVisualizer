@@ -1,42 +1,21 @@
-import { Injectable, OnDestroy } from "@angular/core";
-import { StateManagementService } from "src/app/shared/state-management/state-management.service";
+import { Injectable } from "@angular/core";
+
+import { ResultManagementService } from "./../../../state-management/result-management.service";
+import { IInputBase } from "./../../../types/base/input-base";
+import { AlgorithmInlineWorker } from "./../../../worker/algorithm-inline-worker";
 
 @Injectable({
   providedIn: "root",
 })
-export class JavascriptInterpreterService implements OnDestroy {
-  private worker: Worker;
-  private isWorkerAvailable = false;
+export class JavascriptInterpreterService {
+  constructor(private resultManager: ResultManagementService) {}
 
-  constructor(private stateManagement: StateManagementService) {
-    if (typeof Worker !== "undefined") {
-      this.isWorkerAvailable = true;
-
-      this.worker = new Worker("./javascript-interpreter.worker", {
-        type: "module",
-      });
-    }
-
-    this.worker.onmessage = ({ data }) => {
-      this.stateManagement.codeResults$.next(data);
-    };
-  }
-
-  public ngOnDestroy(): void {
-    this.worker.terminate();
-  }
-
-  public interpret(code: string): void {
-    if (this.isWorkerAvailable) {
-      this.worker.postMessage(code);
-    } else {
-      try {
-        const responseFn = new Function(`${code} return main()`);
-        const data = responseFn();
-        this.stateManagement.codeResults$.next({ data });
-      } catch (error) {
-        this.stateManagement.codeResults$.next({ error });
-      }
-    }
+  public interpret(code: string, data: IInputBase): void {
+    const worker = new AlgorithmInlineWorker(code);
+    worker.postMessage(data);
+    worker.onMessage().subscribe((x) => {
+      this.resultManager.codeResults$.next(x);
+      worker.terminate();
+    });
   }
 }
