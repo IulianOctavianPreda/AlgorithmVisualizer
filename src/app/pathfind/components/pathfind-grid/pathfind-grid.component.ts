@@ -185,16 +185,4 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
-  runDis() {
-    this.service.softResetGrid(this.grid, this.changeDetection);
-    const output = PathfindAlgorithms[0].nativeFunction({
-      data: {
-        grid: this.grid,
-        startingNode: this.service.startingNode,
-        finishingNode: this.service.finishingNode,
-      },
-    });
-    console.log(output);
-  }
 }
