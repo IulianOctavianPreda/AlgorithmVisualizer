@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private resultManager: ResultManagementService
   ) {
     this.formGroup = this.formBuilder.group({
-      // category: null,
+      category: null,
       language: null,
       algorithm: null,
     });
@@ -45,8 +45,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.updateStateManager();
   }
   private updateFormGroup() {
+    const category = this.formGroup.get("category");
     const algorithm = this.formGroup.get("algorithm");
     const language = this.formGroup.get("language");
+
+    this.stateManager.selectedCategory$.subscribe((x) => {
+      if (category.value !== x) {
+        category.patchValue(x);
+      }
+    });
 
     this.stateManager.selectedAlgorithm$.subscribe((x) => {
       if (algorithm.value !== x) {
@@ -59,6 +66,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         language.patchValue(x);
       }
     });
+  }
+
+  get categoryName() {
+    return this.formGroup.get("category").value?.name;
   }
 
   private getAvailableResources() {
