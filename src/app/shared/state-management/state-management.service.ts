@@ -43,11 +43,38 @@ export class StateManagementService {
     });
 
     this.runCode$.subscribe(() => {
+      const data = this.deepCopy(this.data$.value) as IInputBase;
+      const grid = data.data["grid"];
+      let startingNode = {};
+      let finishingNode = {};
+      grid.forEach((row) => {
+        row.forEach((node) => {
+          node.distance = Infinity;
+          node.isVisited = false;
+          node.isSolution = false;
+          node.previouslyVisitedNode = null;
+
+          if (node.isStartingNode) {
+            startingNode = node;
+          }
+          if (node.isFinishingNode) {
+            finishingNode = node;
+          }
+        });
+      });
+
+      data.data["startingNode"] = startingNode;
+      data.data["finishingNode"] = finishingNode;
+
       this.languageService.run(
         this.code$.value,
         this.selectedLanguage$.value.id,
-        this.data$.value
+        data
       );
     });
+  }
+
+  deepCopy(obj: object): object {
+    return JSON.parse(JSON.stringify(obj));
   }
 }
