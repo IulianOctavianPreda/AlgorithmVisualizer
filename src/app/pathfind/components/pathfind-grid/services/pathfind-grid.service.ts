@@ -48,6 +48,8 @@ export class PathfindGridService {
         }
         this.postMessage({
           grid,
+          startingNode,
+          finishingNode,
         });
       }
 

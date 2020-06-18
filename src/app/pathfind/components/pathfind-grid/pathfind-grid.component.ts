@@ -45,19 +45,10 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
 
     this.service.gridCreatorWorker.onMessage().subscribe((data) => {
       this.grid = data.data.grid;
+      this.service.startingNode = data.data.startingNode;
+      this.service.finishingNode = data.data.finishingNode;
 
-      this.grid.forEach((row) => {
-        row.forEach((node) => {
-          if (node.isStartingNode) {
-            this.service.startingNode = node;
-          }
-          if (node.isFinishingNode) {
-            this.service.finishingNode = node;
-          }
-        });
-      });
       this.changeDetection.detectChanges();
-
       this.pushGridData();
     });
   }
