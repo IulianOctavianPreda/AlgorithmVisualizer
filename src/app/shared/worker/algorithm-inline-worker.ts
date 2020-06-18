@@ -23,6 +23,10 @@ export class AlgorithmInlineWorker {
       this.worker.onmessage = (data) => {
         this.message.next(data.data);
       };
+
+      this.worker.onerror = (error) => {
+        this.message.next({ error });
+      };
     } else {
       throw new Error("WebWorker is not enabled");
     }
@@ -55,7 +59,7 @@ export class AlgorithmInlineWorker {
           runWebWorker(evt.data);
         };
       }catch (error){
-        this.postMessage({ error });
+        this.error({ error });
       }
       `;
     return functionBody;
