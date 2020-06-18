@@ -22,15 +22,15 @@
   "author": "",
   "license": "ISC",
   "build": {
-    "productName": "TempApp",
-    "appId": "TempApp",
+    "productName": "AlgorithmVisualizer",
+    "appId": "AlgorithmVisualizer",
     "win": {
       "target": [
         "portable"
       ]
     },
     "portable": {
-      "artifactName": "TempApp.exe"
+      "artifactName": "AlgorithmVisualizer.exe"
     }
   }
 }
