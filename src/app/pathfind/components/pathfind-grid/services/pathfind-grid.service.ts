@@ -133,19 +133,15 @@ export class PathfindGridService {
   animateGrid(grid: PathfindNode[][], data: IPathfindOutput) {
     for (const [index, node] of data?.data?.visitedNodes?.entries()) {
       setTimeout(() => {
-        grid[node.row][node.col] = node;
+        grid[node.row][node.col].isVisited = true;
       }, 10 * index);
     }
     setTimeout(() => {
       for (const [index, node] of data?.data?.shortestPath?.entries()) {
         setTimeout(() => {
-          grid[node.row][node.col] = node;
+          grid[node.row][node.col].isSolution = true;
         }, 10 * index);
       }
-    }, 10 * this.sumRange(data?.data?.visitedNodes?.length));
-  }
-
-  sumRange(n: number) {
-    return (n * (n + 1)) / 2;
+    }, 10 * data?.data?.visitedNodes?.length + 1);
   }
 }
