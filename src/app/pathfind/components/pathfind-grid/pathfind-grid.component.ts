@@ -1,8 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, ViewChild } from "@angular/core";
 import { faFlag, faMale } from "@fortawesome/free-solid-svg-icons";
-import { PathfindAlgorithms } from "src/app/shared/algorithms/pathfind/pathfind-algorithms";
+import { ResultManagementService } from "src/app/shared/state-management/result-management.service";
+import { StateManagementService } from "src/app/shared/state-management/state-management.service";
 import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
 
+import { IPathfindOutput } from "./../../../shared/types/pathfind/pathfind-output";
 import { PATHFIND_NODE_SIZE_PX } from "./../constants/constants";
 import { PathfindGridService } from "./services/pathfind-grid.service";
 
@@ -26,11 +28,49 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   actorIcon = faMale;
 
   constructor(
-    private service: PathfindGridService,
-    private changeDetection: ChangeDetectorRef
+    public service: PathfindGridService,
+    private changeDetection: ChangeDetectorRef,
+    private stateManager: StateManagementService,
+    private resultManager: ResultManagementService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.resultManager.codeResults$.subscribe((x: IPathfindOutput) => {
+      if (x?.data) {
+        this.service.softResetGrid(this.grid, this.changeDetection);
+        console.log(x.data);
+        this.service.animateGrid(this.grid, x);
+      }
+    });
+
+    this.service.gridCreatorWorker.onMessage().subscribe((data) => {
+      this.grid = data.data.grid;
+
+      this.grid.forEach((row) => {
+        row.forEach((node) => {
+          if (node.isStartingNode) {
+            this.service.startingNode = node;
+          }
+          if (node.isFinishingNode) {
+            this.service.finishingNode = node;
+          }
+        });
+      });
+      this.changeDetection.detectChanges();
+
+      this.pushGridData();
+    });
+  }
+
+  pushGridData() {
+    this.stateManager.data$.next({
+      data: {
+        grid: this.grid,
+        startingNode: this.service.startingNode,
+        finishingNode: this.service.finishingNode,
+      },
+    });
+  }
 
   ngAfterViewInit(): void {
     this.resetGrid();
@@ -46,19 +86,11 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   resetGrid(): void {
     this.gridHeight = this.gridRef?.nativeElement?.offsetHeight ?? 0;
     this.gridWidth = this.gridRef?.nativeElement?.offsetWidth ?? 0;
-    this.grid = this.service.createGrid(
-      this.gridHeight,
-      this.gridWidth,
-      PATHFIND_NODE_SIZE_PX
-    );
-    this.stateManager.data$.next({
-      data: {
-        grid: this.grid,
-        startingNode: this.service.startingNode,
-        finishingNode: this.service.finishingNode,
-      },
+    this.service.gridCreatorWorker.postMessage({
+      height: this.gridHeight,
+      width: this.gridWidth,
+      nodeSize: PATHFIND_NODE_SIZE_PX,
     });
-    this.changeDetection.detectChanges();
   }
 
   // copyUsableValuesFromOldGrid(oldGrid: PathfindNode[][]): void {

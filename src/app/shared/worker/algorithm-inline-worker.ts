@@ -48,11 +48,10 @@ export class AlgorithmInlineWorker {
       try{
         ${functionBody}
         function runWebWorker(data) {
-          this.postMessage({ data: ${mainFunctionName}(data) });
+          this.postMessage(${mainFunctionName}(data));
         }
 
         this.onmessage = (evt) => {
-          console.log(evt);
           runWebWorker(evt.data);
         };
       }catch (error){
