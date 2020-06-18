@@ -15,7 +15,7 @@ export function dijkstra({ data }: IPathfindInput): IPathfindOutput {
     }
 
     if (isStuck(closestNode)) {
-      return { data: { visitedNodes, shortestPath: null } };
+      return { data: { visitedNodes, shortestPath: [] } };
     }
 
     closestNode.isVisited = true;
@@ -93,6 +93,7 @@ function getShortestPath(finishingNode: PathfindNode) {
 
 export function dijkstraJs() {
   return `function main({ data }) {
+    console.log(JSON.parse(JSON.stringify(data)))
     const visitedNodes = [];
     data.startingNode.distance = 0;
     const unvisitedNodes = flattenNodeMatrix(data.grid);
@@ -103,7 +104,7 @@ export function dijkstraJs() {
             continue;
         }
         if (isStuck(closestNode)) {
-            return { data: { visitedNodes, shortestPath: null } };
+            return { data: { visitedNodes, shortestPath: [] } };
         }
         closestNode.isVisited = true;
         visitedNodes.push(closestNode);
@@ -181,7 +182,7 @@ export function dijkstraTs() {
         continue;
       }
       if (isStuck(closestNode)) {
-        return { data: { visitedNodes, shortestPath: null } };
+        return { data: { visitedNodes, shortestPath: [] } };
       }
       closestNode.isVisited = true;
       visitedNodes.push(closestNode);
