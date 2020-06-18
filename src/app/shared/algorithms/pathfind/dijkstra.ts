@@ -93,7 +93,6 @@ function getShortestPath(finishingNode: PathfindNode) {
 
 export function dijkstraJs() {
   return `function main({ data }) {
-    console.log(JSON.parse(JSON.stringify(data)))
     const visitedNodes = [];
     data.startingNode.distance = 0;
     const unvisitedNodes = flattenNodeMatrix(data.grid);
