@@ -37,6 +37,8 @@ export class CodeEditorComponent implements OnInit, OnDestroy {
     this.resultManager.codeResults$
       .pipe(takeUntil(this.destroy$))
       .subscribe((data) => {
+        this.error = null;
+
         if (data?.error) {
           this.error = data.error.message;
         }
