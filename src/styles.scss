@@ -17,6 +17,15 @@ body {
   white-space: normal !important;
 }
 
+.app-container {
+  @extend .container-fluid;
+  @extend .p-0;
+  @extend .m-0;
+  height: 100%;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
 .container-flex {
   @extend .container-fluid;
   @extend .d-flex;
@@ -31,6 +40,10 @@ body {
 .centered-flex {
   @extend .justify-content-center;
   @extend .align-items-center;
+}
+
+.fill-height {
+  flex-grow: 1;
 }
 
 .container-centered-flex {

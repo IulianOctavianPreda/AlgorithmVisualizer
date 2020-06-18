@@ -6,18 +6,7 @@ import { PathfindComponent } from "./pathfind.container";
 const routes: Routes = [
   {
     path: "",
-    children: [
-      {
-        path: "",
-        pathMatch: "full",
-        redirectTo: "pathfinding",
-      },
-      {
-        path: "pathfinding",
-        pathMatch: "full",
-        component: PathfindComponent,
-      },
-    ],
+    component: PathfindComponent,
   },
 ];
 

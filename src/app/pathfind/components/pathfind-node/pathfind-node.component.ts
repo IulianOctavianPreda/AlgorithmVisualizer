@@ -35,7 +35,7 @@ import { AnimationStates } from "./animation-states";
           backgroundColor: "cyan",
         })
       ),
-      transition(`* => *`, [animate("1s")]),
+      transition(`* => *`, [animate("0.3s")]),
     ]),
   ],
 })

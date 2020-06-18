@@ -7,6 +7,7 @@ import { environment } from "../environments/environment";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { CodeEditorModule } from "./code-editor/code-editor.module";
+import { HeaderModule } from "./header/header.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { CodeEditorModule } from "./code-editor/code-editor.module";
     AppRoutingModule,
     CodeEditorModule,
     HammerModule,
+    HeaderModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
