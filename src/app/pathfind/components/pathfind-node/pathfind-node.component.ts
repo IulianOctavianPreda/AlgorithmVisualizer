@@ -26,7 +26,7 @@ import { AnimationStates } from "./animation-states";
       state(
         `${AnimationStates.Solution}`,
         style({
-          backgroundColor: "green",
+          backgroundColor: "#00ff00",
         })
       ),
       state(
