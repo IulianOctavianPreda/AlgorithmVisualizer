@@ -1,14 +1,14 @@
 <div
   class="container-flex-full side-menu"
   [@openClose]="isOpen ? 'open' : 'close'"
-  (panleft)="onPanLeft()"
+  (swipeleft)="onSwipeLeft()"
 >
   <div class="col editor px-0" [@visibleHidden]="isOpen ? 'visible' : 'hidden'">
     <app-code-editor
       [ngClass]="{ 'remove-padding': !isOpen }"
     ></app-code-editor>
   </div>
-  <div (panright)="onPanRight()" class="d-flex align-items-center">
+  <div (swiperight)="onSwipeRight()" class="d-flex align-items-center">
     <div class="arrow-container">
       <fa-icon
         *ngIf="isOpen"

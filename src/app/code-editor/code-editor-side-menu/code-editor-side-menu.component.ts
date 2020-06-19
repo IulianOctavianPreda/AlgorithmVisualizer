@@ -50,13 +50,16 @@ export class CodeEditorSideMenuComponent implements OnInit {
       if (data?.data) {
         this.isOpen = false;
       }
+      if (data?.error) {
+        this.isOpen = true;
+      }
     });
   }
 
-  onPanRight() {
+  onSwipeRight() {
     this.isOpen = true;
   }
-  onPanLeft() {
+  onSwipeLeft() {
     this.isOpen = false;
   }
   toggle() {
