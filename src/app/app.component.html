@@ -1,7 +1,8 @@
-<div class="app-container">
+<div class="h-100 w-100 m-0 p-0 d-flex flex-wrap flex-column">
   <app-code-editor-side-menu></app-code-editor-side-menu>
-  <app-header></app-header>
-  <router-outlet
-    class="container-flex centered-flex fill-height"
-  ></router-outlet>
+
+  <app-header class="w-100"></app-header>
+  <div class="w-100 fill-height">
+    <router-outlet></router-outlet>
+  </div>
 </div>

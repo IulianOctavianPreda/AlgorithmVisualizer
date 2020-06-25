@@ -17,14 +17,14 @@ body {
   white-space: normal !important;
 }
 
-.app-container {
-  @extend .container-fluid;
-  @extend .p-0;
-  @extend .m-0;
-  height: 100%;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
+// .app-container {
+//   @extend .container-fluid;
+//   @extend .p-0;
+//   @extend .m-0;
+//   height: 100%;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+// }
 
 .container-flex {
   @extend .container-fluid;
