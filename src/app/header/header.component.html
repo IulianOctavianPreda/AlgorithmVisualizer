@@ -16,20 +16,6 @@
           bindLabel="name"
         ></ng-select>
       </div>
-
-      <!-- <div class="col px-3">
-        <label for="language">Language</label>
-        <ng-select
-          [searchable]="false"
-          [clearable]="false"
-          [selectOnTab]="true"
-          labelForId="language"
-          formControlName="language"
-          [items]="availableLanguages"
-          placeholder="Language"
-          bindLabel="name"
-        ></ng-select>
-      </div> -->
       <div class="col-4 px-3 my-md-0 my-2 d-flex justify-content-end">
         <div *ngIf="!!error" class="row px-3 m-0 alert alert-danger">
           {{ error }}

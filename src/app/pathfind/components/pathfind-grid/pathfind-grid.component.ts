@@ -53,6 +53,10 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.resetGrid();
+  }
+
   pushGridData() {
     this.stateManager.data$.next({
       data: {
@@ -63,15 +67,9 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    this.resetGrid();
-  }
-
   @HostListener("window:resize", ["$event.target"])
   onResize() {
-    // const oldGrid = [...this.grid];
     this.resetGrid();
-    // this.copyUsableValuesFromOldGrid(oldGrid);
   }
 
   resetGrid(): void {
@@ -83,37 +81,6 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
       nodeSize: PATHFIND_NODE_SIZE_PX,
     });
   }
-
-  // copyUsableValuesFromOldGrid(oldGrid: PathfindNode[][]): void {
-  //   for (let row = 0; row < this.grid.length; row++) {
-  //     for (let col = 0; col < this.grid[row].length; col++) {
-  //       if (!!oldGrid[row] && !!oldGrid[row][col]) {
-  //         this.copyPathfindNodeProperties(
-  //           oldGrid[row][col],
-  //           this.grid[row][col]
-  //         );
-  //         if (oldGrid[row][col].isStartingNode) {
-  //           this.service.startingNode.isStartingNode = false;
-  //           this.service.startingNode = this.grid[row][col];
-  //         }
-  //         if (oldGrid[row][col].isFinishingNode) {
-  //           this.service.finishingNode.isFinishingNode = false;
-  //           this.service.finishingNode = this.grid[row][col];
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
-
-  // copyPathfindNodeProperties(source: PathfindNode, destination: PathfindNode) {
-  //   destination.isWall = source.isWall;
-  //   destination.isSolution = source.isSolution;
-  //   destination.isFinishingNode = source.isFinishingNode;
-  //   destination.isStartingNode = source.isStartingNode;
-  //   destination.distance = source.distance;
-  //   destination.isVisited = source.isVisited;
-  //   destination.previouslyVisitedNode = source.previouslyVisitedNode;
-  // }
 
   onDrag(node: PathfindNode) {
     this.mouseDown = false;
