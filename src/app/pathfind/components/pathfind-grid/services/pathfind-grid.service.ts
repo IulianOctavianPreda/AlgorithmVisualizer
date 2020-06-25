@@ -134,14 +134,14 @@ export class PathfindGridService {
     for (const [index, node] of data?.data?.visitedNodes?.entries()) {
       setTimeout(() => {
         grid[node.row][node.col].isVisited = true;
-      }, 10 * index);
+      }, 40 * index);
     }
     setTimeout(() => {
       for (const [index, node] of data?.data?.shortestPath?.entries()) {
         setTimeout(() => {
           grid[node.row][node.col].isSolution = true;
-        }, 10 * index);
+        }, 40 * index);
       }
-    }, 10 * data?.data?.visitedNodes?.length + 1);
+    }, 40 * data?.data?.visitedNodes?.length + 1);
   }
 }

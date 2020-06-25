@@ -1,4 +1,4 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
+import { animate, keyframes, state, style, transition, trigger } from "@angular/animations";
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from "@angular/core";
 import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
 
@@ -35,10 +35,19 @@ import { AnimationStates } from "./animation-states";
           backgroundColor: "cyan",
         })
       ),
-      transition(`* => *`, [animate("0.3s")]),
+      transition(`* => ${AnimationStates.Wall}`, [animate("0.3s")]),
+      transition(`* => ${AnimationStates.Empty}`, [animate("0.3s")]),
+      transition(`* => ${AnimationStates.Solution}`, [animate("0.3s")]),
+      transition(`* => ${AnimationStates.Visited}`, [
+        animate(
+          "0.3s ease-out",
+          keyframes([style({ backgroundColor: "red" })])
+        ),
+      ]),
     ]),
   ],
 })
+// 009aff
 export class PathfindNodeComponent implements OnInit, OnChanges {
   @Input() node: PathfindNode;
 
@@ -50,15 +59,17 @@ export class PathfindNodeComponent implements OnInit, OnChanges {
     if (this.node.isSolution) {
       return AnimationStates.Solution;
     }
-    if (!this.node.isFinishingNode && !this.node.isStartingNode) {
-      if (this.node.isVisited) {
-        return AnimationStates.Visited;
-      }
-      if (this.node.isWall) {
-        return AnimationStates.Wall;
-      }
-      return AnimationStates.Empty;
+    if (this.node.isVisited) {
+      return AnimationStates.Visited;
     }
+    if (
+      this.node.isWall &&
+      !this.node.isFinishingNode &&
+      !this.node.isStartingNode
+    ) {
+      return AnimationStates.Wall;
+    }
+    return AnimationStates.Empty;
   }
 
   constructor() {}
