@@ -89,18 +89,22 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
 
   onDrop(event: DragEvent, node: PathfindNode) {
     event.preventDefault();
-    if (this.selectedNode.isStartingNode) {
-      node.isStartingNode = this.selectedNode.isStartingNode;
-      this.selectedNode.isStartingNode = false;
-      this.service.startingNode = node;
-    }
+    if (
+      (this.selectedNode.isStartingNode && !node.isFinishingNode) ||
+      (this.selectedNode.isFinishingNode && !node.isStartingNode)
+    ) {
+      if (this.selectedNode.isStartingNode) {
+        node.isStartingNode = this.selectedNode.isStartingNode;
+        this.selectedNode.isStartingNode = false;
+        this.service.startingNode = node;
+      }
 
-    if (this.selectedNode.isFinishingNode) {
-      node.isFinishingNode = this.selectedNode.isFinishingNode;
-      this.selectedNode.isFinishingNode = false;
-      this.service.finishingNode = node;
+      if (this.selectedNode.isFinishingNode) {
+        node.isFinishingNode = this.selectedNode.isFinishingNode;
+        this.selectedNode.isFinishingNode = false;
+        this.service.finishingNode = node;
+      }
     }
-
     this.selectedNode = null;
   }
 
