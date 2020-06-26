@@ -15,6 +15,7 @@ import { AnimationStates } from "./animation-states";
         `${AnimationStates.Wall}`,
         style({
           backgroundColor: "black",
+          backgroundImage: "none",
         })
       ),
       state(
@@ -27,12 +28,14 @@ import { AnimationStates } from "./animation-states";
         `${AnimationStates.Solution}`,
         style({
           backgroundColor: "#00ff00",
+          backgroundImage: "none",
         })
       ),
       state(
         `${AnimationStates.Visited}`,
         style({
           backgroundColor: "cyan",
+          backgroundImage: "none",
         })
       ),
       transition(`* => ${AnimationStates.Wall}`, [animate("0.3s")]),
@@ -41,7 +44,12 @@ import { AnimationStates } from "./animation-states";
       transition(`* => ${AnimationStates.Visited}`, [
         animate(
           "0.3s ease-out",
-          keyframes([style({ backgroundColor: "red" })])
+          keyframes([
+            style({
+              backgroundImage: "none",
+              backgroundColor: "red",
+            }),
+          ])
         ),
       ]),
     ]),
@@ -50,6 +58,7 @@ import { AnimationStates } from "./animation-states";
 // 009aff
 export class PathfindNodeComponent implements OnInit, OnChanges {
   @Input() node: PathfindNode;
+  @Input() isMesh: boolean = true;
 
   @Output() nodeUpdate = new EventEmitter<PathfindNode>();
 

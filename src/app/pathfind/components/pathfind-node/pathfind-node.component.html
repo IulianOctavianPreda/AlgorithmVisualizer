@@ -4,7 +4,8 @@
     height: nodeSize + 'px',
     width: nodeSize + 'px'
   }"
-  class="grid-node noselect"
+  [ngClass]="{ 'grid-node': !isMesh, 'mesh-node': isMesh }"
+  class="noselect"
 >
   <ng-content> </ng-content>
 </div>

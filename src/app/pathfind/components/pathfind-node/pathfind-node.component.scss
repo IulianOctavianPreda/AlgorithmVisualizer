@@ -1,3 +1,9 @@
 .grid-node {
   border: 1px solid #bce4f9;
 }
+
+.mesh-node {
+  border: 1px solid white;
+  background-image: url("/assets/images/mesh-node-clear-light.svg");
+  background-size: cover;
+}
