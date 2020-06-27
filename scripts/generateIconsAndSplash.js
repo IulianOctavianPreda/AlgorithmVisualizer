@@ -12,6 +12,18 @@ const SOURCE_ANDROID_SPLASH = "resources/android/splash/";
 const TARGET_ANDROID_ICON = "android/app/src/main/res/";
 const TARGET_ANDROID_SPLASH = "android/app/src/main/res/";
 
+const SOURCE_ELECTRON_ICON = "resources/";
+const SOURCE_ELECTRON_SPLASH = "resources/android/splash/";
+
+const TARGET_ELECTRON_ICON = "electron/build/";
+const TARGET_ELECTRON_SPLASH = "electron/splash_assets/";
+
+const ELECTRON_ICONS = [{ source: "icon.png", target: "icon.png" }];
+
+const ELECTRON_SPLASHES = [
+  { source: "drawable-port-ldpi-screen.png", target: "splash.png" },
+];
+
 const IOS_ICONS = [
   { source: "icon-20.png", target: "AppIcon-20x20@1x.png" },
   { source: "icon-20@2x.png", target: "AppIcon-20x20@2x.png" },
@@ -140,6 +152,9 @@ function copyImages(sourcePath, targetPath, images) {
   for (const icon of images) {
     let source = sourcePath + icon.source;
     let target = targetPath + icon.target;
+    if (!fs.existsSync(targetPath)) {
+      fs.mkdirSync(targetPath);
+    }
     fs.copyFile(source, target, (err) => {
       if (err) throw err;
       console.log(`${source} >> ${target}`);
@@ -152,3 +167,6 @@ copyImages(SOURCE_IOS_SPLASH, TARGET_IOS_SPLASH, IOS_SPLASHES);
 
 copyImages(SOURCE_ANDROID_ICON, TARGET_ANDROID_ICON, ANDROID_ICONS);
 copyImages(SOURCE_ANDROID_SPLASH, TARGET_ANDROID_SPLASH, ANDROID_SPLASHES);
+
+copyImages(SOURCE_ELECTRON_ICON, TARGET_ELECTRON_ICON, ELECTRON_ICONS);
+copyImages(SOURCE_ELECTRON_SPLASH, TARGET_ELECTRON_SPLASH, ELECTRON_SPLASHES);

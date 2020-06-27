@@ -54,7 +54,17 @@ async function createWindow() {
   }
 
   if (useSplashScreen) {
-    splashScreen = new CapacitorSplashScreen(mainWindow);
+    splashScreen = new CapacitorSplashScreen(mainWindow, {
+      imageFileName: "splash.png",
+      windowWidth: 240,
+      windowHeight: 320,
+      // textColor: "white",
+      // loadingText: "",
+      // textPercentageFromTop: 0,
+      transparentWindow: true,
+      autoHideLaunchSplash: true,
+      // customHtml: "",
+    });
     splashScreen.init();
   } else {
     mainWindow.loadURL(`${__dirname}/app/index.html`);
