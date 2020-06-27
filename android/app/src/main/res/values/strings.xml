@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">algorithm-visualizer</string>
-    <string name="title_activity_main">algorithm-visualizer</string>
-    <string name="package_name">com.AlgorithmVisualizer.app</string>
-    <string name="custom_url_scheme">com.AlgorithmVisualizer.app</string>
+    <string name="app_name">Algorithm Visualizer</string>
+    <string name="title_activity_main">Algorithm Visualizer</string>
+    <string name="package_name">com.algorithmvisualizer.app</string>
+    <string name="custom_url_scheme">com.algorithmvisualizer.app</string>
 </resources>

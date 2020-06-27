@@ -1,6 +1,6 @@
 {
-  "name": "AlgorithmVisualizer",
-  "short_name": "AlgorithmVisualizer",
+  "name": "Algorithm Visualizer",
+  "short_name": "Algorithm Visualizer",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",

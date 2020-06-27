@@ -1,4 +1,4 @@
-package com.AlgorithmVisualizer.app;
+package com.algorithmvisualizer.app;
 
 import android.os.Bundle;
 

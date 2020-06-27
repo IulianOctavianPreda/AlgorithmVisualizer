@@ -1,6 +1,6 @@
 {
-  "appId": "com.AlgorithmVisualizer.app",
-  "appName": "algorithm-visualizer",
+  "appId": "com.algorithmvisualizer.app",
+  "appName": "Algorithm Visualizer",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",

@@ -22,15 +22,15 @@
   "author": "",
   "license": "ISC",
   "build": {
-    "productName": "AlgorithmVisualizer",
-    "appId": "AlgorithmVisualizer",
+    "productName": "Algorithm Visualizer",
+    "appId": "algorithmvisualizer",
     "win": {
       "target": [
         "portable"
       ]
     },
     "portable": {
-      "artifactName": "AlgorithmVisualizer.exe"
+      "artifactName": "Algorithm Visualizer.exe"
     }
   }
 }
