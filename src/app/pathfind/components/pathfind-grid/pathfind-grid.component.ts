@@ -28,6 +28,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   flagIcon = faFlag;
   actorIcon = faMale;
 
+  isMesh: boolean;
   constructor(
     public service: PathfindGridService,
     private changeDetection: ChangeDetectorRef,
@@ -43,6 +44,8 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
         this.service.animateGrid(this.grid, x);
       }
     });
+
+    this.stateManager.meshView$.subscribe((x) => (this.isMesh = x));
 
     this.service.gridCreatorWorker.onMessage().subscribe((data) => {
       this.grid = data.data.grid;
@@ -72,6 +75,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
         },
       },
     };
+
     this.stateManager.data$.next(data);
   }
 
@@ -112,6 +116,7 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
         this.selectedNode.isFinishingNode = false;
         this.service.finishingNode = node;
       }
+      this.pushGridData();
     }
     this.selectedNode = null;
   }

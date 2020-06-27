@@ -20,6 +20,10 @@
         <div *ngIf="!!error" class="row px-3 m-0 alert alert-danger">
           {{ error }}
         </div>
+        <button class="btn btn-warning" (click)="toggleView()">
+          Toggle view
+        </button>
+
         <button class="btn btn-success" (click)="run()">Run</button>
       </div>
     </div>

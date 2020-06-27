@@ -111,4 +111,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   run() {
     this.stateManager.runCode$.next();
   }
+
+  toggleView() {
+    const isMesh = this.stateManager.meshView$.value;
+    this.stateManager.meshView$.next(!isMesh);
+  }
 }

@@ -6,6 +6,7 @@
           <app-pathfind-node
             *ngFor="let node of row"
             [node]="node"
+            [isMesh]="isMesh"
             (drop)="onDrop($event, node)"
             (dragover)="allowDrag($event)"
             (mousedown)="onMouseDown(node)"

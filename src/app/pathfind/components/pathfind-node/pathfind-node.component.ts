@@ -86,7 +86,7 @@ export class PathfindNodeComponent implements OnInit, OnChanges {
   ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.node.currentValue) {
+    if (changes?.node?.currentValue) {
       this.animationTrigger();
     }
   }

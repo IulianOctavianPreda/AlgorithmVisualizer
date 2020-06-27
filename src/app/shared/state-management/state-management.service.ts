@@ -19,6 +19,8 @@ export class StateManagementService {
   public availableAlgorithms$ = new BehaviorSubject<IAlgorithmBase[]>(null);
   public availableLanguages$ = new BehaviorSubject<ILanguage[]>(null);
 
+  public meshView$ = new BehaviorSubject<boolean>(false);
+
   public code$ = new BehaviorSubject<string>(null);
   public data$ = new BehaviorSubject<IInputBase>(null);
 
@@ -54,7 +56,6 @@ export class StateManagementService {
           node.previouslyVisitedNode = null;
         });
       });
-
       this.languageService.run(
         this.code$.value,
         this.selectedLanguage$.value.id,
