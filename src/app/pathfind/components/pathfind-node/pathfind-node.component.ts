@@ -58,7 +58,7 @@ import { AnimationStates } from "./animation-states";
 // 009aff
 export class PathfindNodeComponent implements OnInit, OnChanges {
   @Input() node: PathfindNode;
-  @Input() isMesh: boolean = true;
+  @Input() isMesh: boolean = false;
 
   @Output() nodeUpdate = new EventEmitter<PathfindNode>();
 
