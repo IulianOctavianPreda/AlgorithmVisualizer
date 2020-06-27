@@ -28,7 +28,8 @@
     "start:electron": "npm run build:electron && npm run open:electron ",
     "start:ios": "npm run build:ios && npm run open:ios ",
     "restore": "npm install && cd ./electron && npm install",
-    "package:electron": "npm run build:electron && cd ./electron && npm run electron:package && cd ../"
+    "package:electron": "npm run build:electron && cd ./electron && npm run electron:package && cd ../",
+    "generateIconsAndSplash": "cordova-res ios && cordova-res android && node scripts/generateIconsAndSplash.js"
   },
   "private": true,
   "dependencies": {
@@ -69,6 +70,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.12.46",
     "codelyzer": "^5.1.2",
+    "cordova-res": "^0.15.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.3.0",
