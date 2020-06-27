@@ -4,7 +4,12 @@ import { IPathfindOutput } from "../../types/pathfind/pathfind-output";
 
 export function dijkstra({ data }: IPathfindInput): IPathfindOutput {
   const visitedNodes: PathfindNode[] = [];
-  data.startingNode.distance = 0;
+  const startingNode =
+    data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+  const finishingNode =
+    data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
+
+  startingNode.distance = 0;
   const unvisitedNodes = flattenNodeMatrix(data.grid);
   while (!!unvisitedNodes.length) {
     sortNodesByDistance(unvisitedNodes);
@@ -21,11 +26,11 @@ export function dijkstra({ data }: IPathfindInput): IPathfindOutput {
     closestNode.isVisited = true;
     visitedNodes.push(closestNode);
 
-    if (closestNode === data.finishingNode) {
+    if (closestNode === finishingNode) {
       return {
         data: {
           visitedNodes,
-          shortestPath: getShortestPath(data.finishingNode),
+          shortestPath: getShortestPath(finishingNode),
         },
       };
     }
@@ -94,7 +99,10 @@ function getShortestPath(finishingNode: PathfindNode) {
 export function dijkstraJs() {
   return `function main({ data }) {
     const visitedNodes = [];
-    data.startingNode.distance = 0;
+    const startingNode = data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+    const finishingNode = data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
+
+    startingNode.distance = 0;
     const unvisitedNodes = flattenNodeMatrix(data.grid);
     while (!!unvisitedNodes.length) {
         sortNodesByDistance(unvisitedNodes);
@@ -107,11 +115,11 @@ export function dijkstraJs() {
         }
         closestNode.isVisited = true;
         visitedNodes.push(closestNode);
-        if (closestNode === data.finishingNode) {
+        if (closestNode === finishingNode) {
             return {
                 data: {
                     visitedNodes,
-                    shortestPath: getShortestPath(data.finishingNode),
+                    shortestPath: getShortestPath(finishingNode),
                 },
             };
         }
@@ -172,7 +180,10 @@ function getShortestPath(finishingNode) {
 export function dijkstraTs() {
   return `function main({ data }: IPathfindInput): IPathfindOutput {
     const visitedNodes: PathfindNode[] = [];
-    data.startingNode.distance = 0;
+    const startingNode = data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+    const finishingNode = data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
+
+    startingNode.distance = 0;
     const unvisitedNodes = flattenNodeMatrix(data.grid);
     while (!!unvisitedNodes.length) {
       sortNodesByDistance(unvisitedNodes);
@@ -185,11 +196,11 @@ export function dijkstraTs() {
       }
       closestNode.isVisited = true;
       visitedNodes.push(closestNode);
-      if (closestNode === data.finishingNode) {
+      if (closestNode === finishingNode) {
         return {
           data: {
             visitedNodes,
-            shortestPath: getShortestPath(data.finishingNode),
+            shortestPath: getShortestPath(finishingNode),
           },
         };
       }
@@ -252,6 +263,11 @@ export function dijkstraTs() {
       currentNode = currentNode.previouslyVisitedNode;
     }
     return shortestPath;
+  }
+
+  interface GridCoords {
+    row: number;
+    col: number;
   }
 
   interface IPathfindInput {

@@ -4,27 +4,27 @@ import { IPathfindOutput } from "../../types/pathfind/pathfind-output";
 
 export function bfs({ data }: IPathfindInput): IPathfindOutput {
   const visitedNodes: PathfindNode[] = [];
+  const startingNode =
+    data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+  const finishingNode =
+    data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
 
-  if (
-    !data.startingNode ||
-    !data.finishingNode ||
-    data.startingNode === data.finishingNode
-  ) {
+  if (!startingNode || !finishingNode || startingNode === finishingNode) {
     return { data: { visitedNodes, shortestPath: [] } };
   }
 
-  const unvisitedNodes: PathfindNode[] = [data.startingNode];
+  const unvisitedNodes: PathfindNode[] = [startingNode];
 
   while (!!unvisitedNodes.length) {
     const currentNode = unvisitedNodes.shift();
     currentNode.isVisited = true;
     visitedNodes.push(currentNode);
 
-    if (currentNode === data.finishingNode) {
+    if (currentNode === finishingNode) {
       return {
         data: {
           visitedNodes,
-          shortestPath: getShortestPath(data.finishingNode),
+          shortestPath: getShortestPath(finishingNode),
         },
       };
     }
@@ -81,21 +81,22 @@ function getShortestPath(finishingNode: PathfindNode) {
 export function bfsJs() {
   return `function main({ data }) {
     const visitedNodes = [];
-    if (!data.startingNode ||
-        !data.finishingNode ||
-        data.startingNode === data.finishingNode) {
-        return { data: { visitedNodes, shortestPath: [] } };
+    const startingNode = data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+    const finishingNode = data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
+
+    if (!startingNode || !finishingNode || startingNode === finishingNode) {
+      return { data: { visitedNodes, shortestPath: [] } };
     }
-    const unvisitedNodes = [data.startingNode];
+    const unvisitedNodes = [startingNode];
     while (!!unvisitedNodes.length) {
         const currentNode = unvisitedNodes.shift();
         currentNode.isVisited = true;
         visitedNodes.push(currentNode);
-        if (currentNode === data.finishingNode) {
+        if (currentNode === finishingNode) {
             return {
                 data: {
                     visitedNodes,
-                    shortestPath: getShortestPath(data.finishingNode),
+                    shortestPath: getShortestPath(finishingNode),
                 },
             };
         }
@@ -144,27 +145,25 @@ function getShortestPath(finishingNode) {
 export function bfsTs() {
   return `function main({ data }: IPathfindInput): IPathfindOutput {
     const visitedNodes: PathfindNode[] = [];
+    const startingNode = data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+    const finishingNode = data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
 
-    if (
-      !data.startingNode ||
-      !data.finishingNode ||
-      data.startingNode === data.finishingNode
-    ) {
+    if (!startingNode || !finishingNode || startingNode === finishingNode) {
       return { data: { visitedNodes, shortestPath: [] } };
     }
 
-    const unvisitedNodes: PathfindNode[] = [data.startingNode];
+    const unvisitedNodes: PathfindNode[] = [startingNode];
 
     while (!!unvisitedNodes.length) {
       const currentNode = unvisitedNodes.shift();
       currentNode.isVisited = true;
       visitedNodes.push(currentNode);
 
-      if (currentNode === data.finishingNode) {
+      if (currentNode === finishingNode) {
         return {
           data: {
             visitedNodes,
-            shortestPath: getShortestPath(data.finishingNode),
+            shortestPath: getShortestPath(finishingNode),
           },
         };
       }
@@ -216,6 +215,11 @@ export function bfsTs() {
       currentNode = currentNode.previouslyVisitedNode;
     }
     return shortestPath;
+  }
+
+  interface GridCoords {
+    row: number;
+    col: number;
   }
 
   interface IPathfindInput {

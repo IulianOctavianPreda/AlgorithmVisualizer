@@ -4,27 +4,27 @@ import { IPathfindOutput } from "../../types/pathfind/pathfind-output";
 
 export function dfs({ data }: IPathfindInput): IPathfindOutput {
   const visitedNodes: PathfindNode[] = [];
+  const startingNode =
+    data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+  const finishingNode =
+    data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
 
-  if (
-    !data.startingNode ||
-    !data.finishingNode ||
-    data.startingNode === data.finishingNode
-  ) {
+  if (!startingNode || !finishingNode || startingNode === finishingNode) {
     return { data: { visitedNodes, shortestPath: [] } };
   }
 
-  const unvisitedNodes: PathfindNode[] = [data.startingNode];
+  const unvisitedNodes: PathfindNode[] = [startingNode];
 
   while (!!unvisitedNodes.length) {
     const currentNode = unvisitedNodes.pop();
     currentNode.isVisited = true;
     visitedNodes.push(currentNode);
 
-    if (currentNode === data.finishingNode) {
+    if (currentNode === finishingNode) {
       return {
         data: {
           visitedNodes,
-          shortestPath: getShortestPath(data.finishingNode),
+          shortestPath: getShortestPath(finishingNode),
         },
       };
     }
@@ -80,21 +80,23 @@ function getShortestPath(finishingNode: PathfindNode) {
 export function dfsJs() {
   return `function main({ data }) {
     const visitedNodes = [];
-    if (!data.startingNode ||
-        !data.finishingNode ||
-        data.startingNode === data.finishingNode) {
-        return { data: { visitedNodes, shortestPath: [] } };
+    const startingNode = data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+    const finishingNode = data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
+
+
+    if (!startingNode || !finishingNode || startingNode === finishingNode) {
+      return { data: { visitedNodes, shortestPath: [] } };
     }
-    const unvisitedNodes = [data.startingNode];
+    const unvisitedNodes = [startingNode];
     while (!!unvisitedNodes.length) {
         const currentNode = unvisitedNodes.pop();
         currentNode.isVisited = true;
         visitedNodes.push(currentNode);
-        if (currentNode === data.finishingNode) {
+        if (currentNode === finishingNode) {
             return {
                 data: {
                     visitedNodes,
-                    shortestPath: getShortestPath(data.finishingNode),
+                    shortestPath: getShortestPath(finishingNode),
                 },
             };
         }
@@ -140,39 +142,37 @@ function getShortestPath(finishingNode) {
 
 export function dfsTs() {
   return `function main({ data }: IPathfindInput): IPathfindOutput {
-    const visitedNodes: PathfindNode[] = [];
+  const visitedNodes: PathfindNode[] = [];
+  const startingNode = data.grid[data.startingNodeCoords.row][data.startingNodeCoords.col];
+  const finishingNode = data.grid[data.finishingNodeCoords.row][data.finishingNodeCoords.col];
 
-    if (
-      !data.startingNode ||
-      !data.finishingNode ||
-      data.startingNode === data.finishingNode
-    ) {
-      return { data: { visitedNodes, shortestPath: [] } };
-    }
-
-    const unvisitedNodes: PathfindNode[] = [data.startingNode];
-
-    while (!!unvisitedNodes.length) {
-      const currentNode = unvisitedNodes.pop();
-      currentNode.isVisited = true;
-      visitedNodes.push(currentNode);
-
-      if (currentNode === data.finishingNode) {
-        return {
-          data: {
-            visitedNodes,
-            shortestPath: getShortestPath(data.finishingNode),
-          },
-        };
-      }
-
-      const currentNeighbors = getNeighbors(currentNode, data.grid);
-      currentNeighbors.forEach((neighbor) => {
-        neighbor.previouslyVisitedNode = currentNode;
-        unvisitedNodes.push(neighbor);
-      });
-    }
+  if (!startingNode || !finishingNode || startingNode === finishingNode) {
     return { data: { visitedNodes, shortestPath: [] } };
+  }
+
+  const unvisitedNodes: PathfindNode[] = [startingNode];
+
+  while (!!unvisitedNodes.length) {
+    const currentNode = unvisitedNodes.pop();
+    currentNode.isVisited = true;
+    visitedNodes.push(currentNode);
+
+    if (currentNode === finishingNode) {
+      return {
+        data: {
+          visitedNodes,
+          shortestPath: getShortestPath(finishingNode),
+        },
+      };
+    }
+
+    const currentNeighbors = getNeighbors(currentNode, data.grid);
+    currentNeighbors.forEach((neighbor) => {
+      neighbor.previouslyVisitedNode = currentNode;
+      unvisitedNodes.push(neighbor);
+    });
+  }
+  return { data: { visitedNodes, shortestPath: [] } };
   }
 
   function getNeighbors(node: PathfindNode, grid: PathfindNode[][]) {
@@ -212,6 +212,11 @@ export function dfsTs() {
       currentNode = currentNode.previouslyVisitedNode;
     }
     return shortestPath;
+  }
+
+  interface GridCoords {
+    row: number;
+    col: number;
   }
 
   interface IPathfindInput {

@@ -4,6 +4,7 @@ import { ResultManagementService } from "src/app/shared/state-management/result-
 import { StateManagementService } from "src/app/shared/state-management/state-management.service";
 import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
 
+import { IPathfindInput } from "./../../../shared/types/pathfind/pathfind-input";
 import { IPathfindOutput } from "./../../../shared/types/pathfind/pathfind-output";
 import { PATHFIND_NODE_SIZE_PX } from "./../constants/constants";
 import { PathfindGridService } from "./services/pathfind-grid.service";
@@ -58,13 +59,20 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
   }
 
   pushGridData() {
-    this.stateManager.data$.next({
+    const data: IPathfindInput = {
       data: {
         grid: this.grid,
-        startingNode: this.service.startingNode,
-        finishingNode: this.service.finishingNode,
+        startingNodeCoords: {
+          row: this.service.startingNode.row,
+          col: this.service.startingNode.col,
+        },
+        finishingNodeCoords: {
+          row: this.service.finishingNode.row,
+          col: this.service.finishingNode.col,
+        },
       },
-    });
+    };
+    this.stateManager.data$.next(data);
   }
 
   @HostListener("window:resize", ["$event.target"])
