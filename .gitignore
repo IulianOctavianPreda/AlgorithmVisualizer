@@ -44,3 +44,9 @@ speed-measure-plugin*.json
 # System Files
 **/.DS_Store
 **/Thumbs.db
+
+# Icon and Splash images for Android, Electron and Ios
+**/android/**/*.png
+**/electron/**/*.png
+**/electron/**/*.gif
+**/ios/**/*.png
