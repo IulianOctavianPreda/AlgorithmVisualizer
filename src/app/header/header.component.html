@@ -1,10 +1,10 @@
 <nav class="navbar navbar-light" style="background-color: #bce4f9;">
   <form [formGroup]="formGroup" class="container-flex-full flex-column">
     <div class="row-flex m-0 justify-content-between align-items-center">
-      <div class="col-2 px-3">
-        <h1 class="my-0 hide-mobile">{{ categoryName }}</h1>
+      <div class="col-md-2 col-sm-2 px-3 hide-mobile">
+        <h1 class="my-0">{{ categoryName }}</h1>
       </div>
-      <div class="col px-3">
+      <div class="col-md-4 col-sm-6 px-3">
         <ng-select
           [searchable]="false"
           [clearable]="false"
@@ -16,7 +16,9 @@
           bindLabel="name"
         ></ng-select>
       </div>
-      <div class="col-4 px-3 my-md-0 my-2 d-flex justify-content-end">
+      <div
+        class="col-md-6 col-sm-6 px-3 my-md-0 my-2 d-flex justify-content-end"
+      >
         <div *ngIf="!!error" class="row px-3 m-0 alert alert-danger">
           {{ error }}
         </div>
