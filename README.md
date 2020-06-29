@@ -3,13 +3,17 @@
 <img src="https://user-images.githubusercontent.com/33485041/86045483-5daf2500-ba54-11ea-98eb-d0b473e42e6e.png" alt="alt text" width="400" height="400">
 
 # Preview
-![split 4 gif optimized 2](https://user-images.githubusercontent.com/33485041/86045406-39534880-ba54-11ea-9b2f-3e5b74dce8d6.gif)
 
+![split 4 gif optimized 2](https://user-images.githubusercontent.com/33485041/86045406-39534880-ba54-11ea-9b2f-3e5b74dce8d6.gif)
 
 ## Getting started
 
 - Run `npm run restore` to install the node modules for the web app and the electron app
+- Run `npm run generateIconsAndSplash` to create all the icons and splash art required by the android, ios and electron project
 - Run `ng serve` or `npm run start:web` to start the web app
+- Run `npm run start:electron` to start the electron application and `npm run package:electron` to create a portable executable for it.
+- Run `npm run start:android` to copy the needed files to the android project and start android studio to build the application
+- Run `npm run start:ios` to copy the needed files to the ios project and start xcode to build the application
 
 ## Package.json scripts
 
