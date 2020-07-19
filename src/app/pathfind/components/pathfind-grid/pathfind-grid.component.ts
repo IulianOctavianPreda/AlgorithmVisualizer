@@ -40,7 +40,6 @@ export class PathfindGridComponent implements OnInit, AfterViewInit {
     this.resultManager.codeResults$.subscribe((x: IPathfindOutput) => {
       if (x?.data) {
         this.service.softResetGrid(this.grid, this.changeDetection);
-        console.log(x.data);
         this.service.animateGrid(this.grid, x);
       }
     });
