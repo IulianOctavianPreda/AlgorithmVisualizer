@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Injectable } from "@angular/core";
-import { PathfindNode } from "src/app/shared/types/pathfind/pathfind-node";
+import { ChangeDetectorRef, Injectable } from '@angular/core';
+import { PathfindNode } from 'src/app/shared/types/pathfind/pathfind-node';
 
-import { IPathfindOutput } from "./../../../../shared/types/pathfind/pathfind-output";
-import { InlineWorker } from "./../../../../shared/worker/inline-worker";
+import { IPathfindOutput } from './../../../../shared/types/pathfind/pathfind-output';
+import { InlineWorker } from './../../../../shared/worker/inline-worker';
 
 @Injectable({
   providedIn: "root",
@@ -53,58 +53,71 @@ export class PathfindGridService {
         });
       }
 
+      function createNode(
+        col: number,
+        row: number,
+        cols: number,
+        isStartingNode: boolean,
+        isFinishingNode: boolean
+      ) {
+        return {
+          id: row * cols + col,
+          col,
+          row,
+          distance: Infinity,
+          isVisited: false,
+          isWall: false,
+          isSolution: false,
+          isStartingNode,
+          isFinishingNode,
+          previouslyVisitedNode: null,
+        };
+      }
+
+      function createPathFindNodeForMoreRows(
+        row: number,
+        col: number,
+        cols: number,
+        rows: number
+      ) {
+        const initialColPosition = Math.floor(cols / 2);
+        const initialRowStartingPosition = 2;
+        const initialRowFinishPosition = rows - 2;
+        let isStartingNode =
+          row === initialRowStartingPosition && col === initialColPosition;
+        let isFinishingNode =
+          row === initialRowFinishPosition && col === initialColPosition;
+        return createNode(col, row, cols, isStartingNode, isFinishingNode);
+      }
+
+      function createPathFindNodeForMoreColumns(
+        row: number,
+        col: number,
+        rows: number,
+        cols: number
+      ) {
+        const initialRowPosition = Math.floor(rows / 2);
+        const initialColStartingPosition = 2;
+        const initialColFinishPosition = cols - 2;
+        let isStartingNode =
+          row === initialRowPosition && col === initialColStartingPosition;
+        let isFinishingNode =
+          row === initialRowPosition && col === initialColFinishPosition;
+
+        return createNode(col, row, cols, isStartingNode, isFinishingNode);
+      }
+
       function createPathfindNode(
         row: number,
         col: number,
         rows: number,
         cols: number
       ): PathfindNode {
-        let node: PathfindNode = null;
-        let isStartingNode = false;
-        let isFinishingNode = false;
         if (cols > rows) {
-          const initialRowPosition = Math.floor(rows / 2);
-          const initialColStartingPosition = 2;
-          const initialColFinishPosition = cols - 2;
-          isStartingNode =
-            row === initialRowPosition && col === initialColStartingPosition;
-          isFinishingNode =
-            row === initialRowPosition && col === initialColFinishPosition;
-          node = {
-            id: row * cols + col,
-            col,
-            row,
-            distance: Infinity,
-            isVisited: false,
-            isWall: false,
-            isSolution: false,
-            isStartingNode,
-            isFinishingNode,
-            previouslyVisitedNode: null,
-          };
+          return createPathFindNodeForMoreColumns(row, col, rows, cols);
         } else {
-          const initialColPosition = Math.floor(cols / 2);
-          const initialRowStartingPosition = 2;
-          const initialRowFinishPosition = rows - 2;
-          isStartingNode =
-            row === initialRowStartingPosition && col === initialColPosition;
-          isFinishingNode =
-            row === initialRowFinishPosition && col === initialColPosition;
-
-          node = {
-            id: row * cols + col,
-            col,
-            row,
-            distance: Infinity,
-            isVisited: false,
-            isWall: false,
-            isSolution: false,
-            isStartingNode,
-            isFinishingNode,
-            previouslyVisitedNode: null,
-          };
+          return createPathFindNodeForMoreRows(row, col, rows, cols);
         }
-        return node;
       }
 
       // @ts-ignore
