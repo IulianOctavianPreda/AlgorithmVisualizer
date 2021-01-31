@@ -1,7 +1,7 @@
 import { PathfindNode } from 'src/app/shared/types/pathfind/pathfind-node';
 import { InlineWorker } from 'src/app/shared/worker/inline-worker';
 
-export const instantiateGridCreatorWorker = () => {
+export function instantiateGridCreatorWorker() {
   return new InlineWorker(() => {
     function createGrid({
       height,
@@ -110,4 +110,4 @@ export const instantiateGridCreatorWorker = () => {
       createGrid(evt.data);
     };
   });
-};
+}
